@@ -1,0 +1,26 @@
+{
+  "name": "first-solidjs",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@rnwonder/solid-date-picker": "^0.8.0",
+    "ag-grid-community": "~31.0.1",
+    "ag-grid-solid": "~31.0.1",
+    "flowbite": "^2.2.1",
+    "solid-js": "^1.8.7"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8",
+    "vite-plugin-solid": "^2.8.0"
+  }
+}
