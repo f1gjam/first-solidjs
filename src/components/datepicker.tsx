@@ -1,36 +1,36 @@
 import { createSignal } from 'solid-js';
 import DatePicker, { PickerValue, utils, IDatePickerOnChange } from '@rnwonder/solid-date-picker';
 
-import { setRowDataFunc } from './table-ag';
 
 const today = new Date();
 const formattedDate = utils().formatDate(today, { format: "MMM-yyyy" });
 
-var selectedDate: string
+var selectedDate: string //= formattedDate
 
-//let url: string
 
-const fetchData = async () =>
-    (await fetch(`http://localhost:8080/dataapi/rider_totals?` + new URLSearchParams({
-        monthSelected: selectedDate,
-    })
-    )).json();
+// export const fetchData = async () =>
+//     (await fetch(`http://localhost:8080/dataapi/rider_totals?` + new URLSearchParams({
+//         monthSelected: selectedDate,
+//     })
+//     )).json();
 
+
+export const [date, setDate] = createSignal
+    <PickerValue>({
+        value: {
+            selected: formattedDate,
+        },
+        label: formattedDate,
+    });
+
+const minimumDate = {
+    year: 2020,
+    month: 1,
+    day: 1,
+};
 
 export function DatePickerComponent() {
-    const [date, setDate] = createSignal
-        <PickerValue>({
-            value: {
-                selected: formattedDate,
-            },
-            label: formattedDate,
-        });
 
-    const minimumDate = {
-        year: 2020,
-        month: 1,
-        day: 1,
-    };
 
     const maximumDate = {
         year: 2030,
@@ -59,8 +59,16 @@ export function DatePickerComponent() {
 
                     const formattedDate = utils().convertDateObjectToDate(selectedDateValue) // Date
                     let formattedSelectedDate = utils().formatDate(formattedDate, { format: "MMM-yyyy" });
-                    console.log(formattedSelectedDate);
+                    console.log("formatted date: " + formattedSelectedDate);
                     selectedDate = formattedSelectedDate;
+                    setDate(
+                        {
+                            value: {
+                                selected: formattedSelectedDate,
+                            },
+                            label: formattedSelectedDate,
+                        })
+                    console.log(date().value.selected);
                     // url = `http://localhost:8080/dataapi/rider_totals?` + new URLSearchParams({
                     //     monthSelected: selectedDate,
                     // })
@@ -68,7 +76,7 @@ export function DatePickerComponent() {
 
                     // let x = fetchData();
                     // console.log(x);
-                    setRowDataFunc(fetchData);
+                    //setRowDataFunc(fetchData);
 
                 }
 

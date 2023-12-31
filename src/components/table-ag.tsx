@@ -1,7 +1,7 @@
 import 'flowbite';
 import { createResource } from 'solid-js';
 import type { StravaStatsDataType } from '../models/myTypes'
-
+import { date } from './datepicker';
 import AgGridSolid from 'ag-grid-solid';
 
 import 'ag-grid-community/styles/ag-grid.css'; // grid core CSS
@@ -9,23 +9,23 @@ import "ag-grid-community/styles/ag-theme-alpine.css"; // optional theme
 import "ag-grid-community/styles/ag-theme-quartz.css"; // optional theme
 
 
-const fetchData = async () =>
-    (await fetch(`http://localhost:8080/dataapi/rider_totals`)).json();
+async function fetchData(): Promise<StravaStatsDataType> {
+    var selectedDate = await date().value.selected;
+    let params = new URLSearchParams({ monthSelected: selectedDate! });
 
-
-const [rowData, setRowData] = createResource<StravaStatsDataType>(fetchData);
-
-
-
-
-export const setRowDataFunc = (data) => {
-    //    setRowData.mutate(data)
-    setRowData.refetch(data)
-
-    console.log(data);
-    console.log("Calling setRowDataFunc");
+    let apiUrl = `http://localhost:8080/dataapi/rider_totals?${params}`;
+    console.log(apiUrl);
+    //var data = (await fetch(apiUrl)).json()
+    var response = await fetch(apiUrl);
+    var data: StravaStatsDataType = await response.json();
+    return data
 
 }
+
+
+
+const [rowData] = createResource(date, fetchData);
+console.log("rowdata is: " + rowData());
 
 export function TableAG() {
 
@@ -56,5 +56,7 @@ export function TableAG() {
                 columnDefs={columnDefs} />
         </div>
 
+
     )
+
 }
