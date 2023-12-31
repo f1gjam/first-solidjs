@@ -1,18 +1,11 @@
 import { createSignal } from 'solid-js';
-import DatePicker, { PickerValue, utils, IDatePickerOnChange } from '@rnwonder/solid-date-picker';
+import DatePicker, { PickerValue, utils } from '@rnwonder/solid-date-picker';
 
 
 const today = new Date();
 const formattedDate = utils().formatDate(today, { format: "MMM-yyyy" });
 
 var selectedDate: string //= formattedDate
-
-
-// export const fetchData = async () =>
-//     (await fetch(`http://localhost:8080/dataapi/rider_totals?` + new URLSearchParams({
-//         monthSelected: selectedDate,
-//     })
-//     )).json();
 
 
 export const [date, setDate] = createSignal
@@ -69,14 +62,6 @@ export function DatePickerComponent() {
                             label: formattedSelectedDate,
                         })
                     console.log(date().value.selected);
-                    // url = `http://localhost:8080/dataapi/rider_totals?` + new URLSearchParams({
-                    //     monthSelected: selectedDate,
-                    // })
-                    // console.log(url);
-
-                    // let x = fetchData();
-                    // console.log(x);
-                    //setRowDataFunc(fetchData);
 
                 }
 
