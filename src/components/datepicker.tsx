@@ -5,7 +5,6 @@ import DatePicker, { PickerValue, utils } from '@rnwonder/solid-date-picker';
 const today = new Date();
 const formattedDate = utils().formatDate(today, { format: "MMM-yyyy" });
 
-var selectedDate: string //= formattedDate
 
 
 export const [date, setDate] = createSignal
@@ -53,7 +52,7 @@ export function DatePickerComponent() {
                     const formattedDate = utils().convertDateObjectToDate(selectedDateValue) // Date
                     let formattedSelectedDate = utils().formatDate(formattedDate, { format: "MMM-yyyy" });
                     console.log("formatted date: " + formattedSelectedDate);
-                    selectedDate = formattedSelectedDate;
+                    //var selectedDate: string = formattedSelectedDate;
                     setDate(
                         {
                             value: {

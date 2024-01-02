@@ -1,4 +1,3 @@
-import 'flowbite';
 import { createResource } from 'solid-js';
 import type { StravaStatsDataType } from '../models/myTypes'
 import { date } from './datepicker';
