@@ -47,7 +47,7 @@ async function fetchData(selectedDate: string): Promise<StravaStatsDataType> {
 }
 
 
-const updateData = async (table: ITableInstance) => {
+const updateData = async (table: ITableInstance, selectedDate: string) => {
     table.showLoading("Loading...");
     const response = await fetchData(selectedDate);
     table.hideLoading();
@@ -78,7 +78,7 @@ export function KATable() {
 
 
     useEffect(() => {
-        updateData(table);
+        updateData(table, selectedDate);
     }, [selectedDate]);
 
     return (
