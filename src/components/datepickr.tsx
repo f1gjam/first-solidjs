@@ -2,7 +2,6 @@
 import DatePicker from "react-datepicker";
 import { signal } from '@preact/signals-react'
 
-import { getData } from "./katable";
 import React, { useState } from "react";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -46,7 +45,6 @@ export function DatePickr() {
                 const FormattedDateString: string = format(current_date, "MMMM-yyyy").toString()
 
                 formattedDate.value = FormattedDateString;
-                getData();
                 console.log(FormattedDateString);
             }}
         />
