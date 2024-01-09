@@ -82,7 +82,7 @@ export function DemoComponent() {
                     console.log("Date Selected: " + selectedDate)
                     const FormattedDateString: string = format(selectedDate, "MMMM-yyyy").toString()
                     formattedDate.value = FormattedDateString;
-                    getData();
+                    getData(FormattedDateString);
 
 
                 }}

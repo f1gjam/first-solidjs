@@ -25,8 +25,8 @@ const emptyData: StravaStatsDataType = ({} as StravaStatsDataType);
 const fetchedData = signal<StravaStatsDataType>(emptyData);
 
 
-export function getData() {
-    fetchData().then((data) => {
+export function getData(selectedDate: string) {
+    fetchData(selectedDate).then((data) => {
         fetchedData.value = data
 
     });
