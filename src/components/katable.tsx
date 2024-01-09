@@ -36,9 +36,7 @@ export function getData() {
 
 //let formattedDate: string = "December-2023";
 
-async function fetchData(): Promise<StravaStatsDataType> {
-    let selectedDate: string = formattedDate.value.toString();
-    console.log(formattedDate.value)
+async function fetchData(selectedDate: string): Promise<StravaStatsDataType> {
     let params = new URLSearchParams({ monthSelected: selectedDate });
 
     let apiUrl = `http://localhost:8080/dataapi/rider_totals?${params}`;
@@ -48,12 +46,13 @@ async function fetchData(): Promise<StravaStatsDataType> {
     return data
 }
 
-const updateData = async (table: ITableInstance) => {
-    const data = await fetchData();
-    table.updateData(data.MaleSorted);
-    console.log(data.MaleSorted)
 
+const updateData = async (table: ITableInstance) => {
+    table.showLoading("Loading...");
+    const response = await fetchData(selectedDate);
+    table.hideLoading();
 }
+
 
 export function KATable() {
     //const [data, setData] = useState<StravaStatsDataType>();
@@ -74,12 +73,13 @@ export function KATable() {
     //     }
     // });
 
+    let selectedDate: string = formattedDate.value.toString();
     const table = useTable();
 
 
     useEffect(() => {
         updateData(table);
-    }, []);
+    }, [selectedDate]);
 
     return (
         <div className="shadow-lg rounded-lg overflow-hidden mx-4 my-4 sm:mx-4 sm:my-4" >
