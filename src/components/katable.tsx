@@ -73,19 +73,16 @@ export function KATable() {
     //     }
     // });
 
-    let selectedDate: string = formattedDate.value.toString();
+    
     const table = useTable();
 
-
-    useEffect(() => {
-        updateData(table, selectedDate);
-    }, [selectedDate]);
 
     return (
         <div className="shadow-lg rounded-lg overflow-hidden mx-4 my-4 sm:mx-4 sm:my-4" >
 
 
             <Table
+                data={fetchedData.value?.MaleSorted}
                 // loading={{
                 //     enabled: true,
                 //     text: "Loading..."
@@ -104,7 +101,7 @@ export function KATable() {
 
                     ]}
 
-                //data={[]}
+                
                 //data={data?.MaleSorted}
 
                 paging={{
