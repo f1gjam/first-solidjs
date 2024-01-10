@@ -7,70 +7,57 @@ import 'ka-table/style.css';
 import { ActionType, ITableInstance, Table, useTable } from 'ka-table';
 import { DataType, EditingMode, SortingMode, PagingPosition } from 'ka-table/enums';
 
-import { effect, signal } from '@preact/signals-react'
+import { effect, signal, useSignal } from '@preact/signals-react'
 import React, { useState } from 'react';
 
 
 //import { myTestData } from "../models/data";
 import { useEffect } from 'react';
-import { format } from "date-fns";
 
 
+import { formattedDate } from './flowbite-datepicker2'
 import { set } from 'date-fns';
 
 
+const emptyData: StravaStatsDataType = ({} as StravaStatsDataType);
 
-// async function fetchData(selectedDate: string, setAthletes: any) {
-//     if (selectedDate == "") {
-//         selectedDate = format(new Date(), "MMMM-yyyy").toString()
-//     }
+
+
+// export async function fetchData(selectedDate: string) {
 //     let params = new URLSearchParams({ monthSelected: selectedDate });
 
 //     let apiUrl = `http://localhost:8080/dataapi/rider_totals?${params}`;
 //     console.log(apiUrl);
 //     const response = await fetch(apiUrl);
 //     const data: StravaStatsDataType = await response.json();
-//     setAthletes(data);
+//     fetchedData.value = data;
+//     //console.log(fetchedData.value);
+//     //return data
 // }
 
 
-export function KATable({ date }: { date: string }) {
+export const fetchedData = signal<StravaStatsDataType>(emptyData);
 
-    console.log(date);
+
+
+export function KATable2() {
+
+    //const fetchedData = useSignal<StravaStatsDataType>(emptyData);
+
 
     const [athletes, setAthletes] = useState<StravaStatsDataType>();
 
+    let tdata: StravaStatsDataType
 
+    effect(() => {
 
-    async function fetchData(selectedDate: string) {
-        if (selectedDate == "") {
-            selectedDate = format(new Date(), "MMMM-yyyy").toString()
-        }
-        let params = new URLSearchParams({ monthSelected: selectedDate });
+        setAthletes(fetchedData.value);
 
-        let apiUrl = `http://localhost:8080/dataapi/rider_totals?${params}`;
-        console.log(apiUrl);
-        const response = await fetch(apiUrl);
-        const data: StravaStatsDataType = await response.json();
-        setAthletes(data);
-        console.log(data);
-
-    }
+        console.log(fetchedData.value);
+        console.log(tdata);
+    })
 
     const table = useTable();
-
-
-    useEffect(() => {
-        console.log("useEffect: " + date);
-        fetchData(date);
-        console.log(athletes?.MaleSorted);
-        table.loadData();
-    }, [date]);
-
-
-
-
-
 
 
     return (

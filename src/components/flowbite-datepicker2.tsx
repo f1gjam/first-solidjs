@@ -5,17 +5,20 @@ import { format } from "date-fns";
 
 
 
-//import { fetchedData } from "./katable2";
+//import { getData } from "./katable";
+
+//import { fetchData } from "./katable2";
+import { fetchedData } from "./katable2";
 
 const current_date: Date = new Date();
 
 const dateFormattedString: string = format(current_date, "MMMM-yyyy").toString()
 
-//export const formattedDate = signal<string>(dateFormattedString);
+export const formattedDate = signal<string>(dateFormattedString);
 
 
 
-export function DemoComponent({ setDate }: { setDate: React.Dispatch<React.SetStateAction<string>> }) {
+export function DemoComponent2() {
     const [show, setShow] = useState(false);
     const handleChange = (selectedDate: Date) => {
     }
@@ -59,6 +62,7 @@ export function DemoComponent({ setDate }: { setDate: React.Dispatch<React.SetSt
                     defaultDate: new Date(),
                     language: "en",
                     disabledDates: [],
+                    //weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
                     inputNameProp: "date",
                     inputIdProp: "date",
                     inputPlaceholderProp: "Select Date",
@@ -73,10 +77,25 @@ export function DemoComponent({ setDate }: { setDate: React.Dispatch<React.SetSt
                     handleChange(selectedDate);
                     console.log("Date Selected: " + selectedDate)
                     const FormattedDateString: string = format(selectedDate, "MMMM-yyyy").toString()
-                    setDate(FormattedDateString)
+                    formattedDate.value = FormattedDateString;
                     //fetchData(FormattedDateString);
 
 
+                    async function fetchData(selectedDate: string) {
+                        let params = new URLSearchParams({ monthSelected: selectedDate });
+
+                        let apiUrl = `http://localhost:8080/dataapi/rider_totals?${params}`;
+                        console.log(apiUrl);
+                        const response = await fetch(apiUrl);
+                        let data = await response.json();
+                        //eeturn await response.json();
+                        fetchedData.value = data;
+
+                    }
+                    // let data = fetchData(FormattedDateString);
+                    // data.then((data) => {
+                    //     fetchedData.value = data;
+                    // })
 
 
                 }}
