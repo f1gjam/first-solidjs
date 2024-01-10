@@ -20,18 +20,19 @@ import { set } from 'date-fns';
 
 
 
-// async function fetchData(selectedDate: string, setAthletes: any) {
-//     if (selectedDate == "") {
-//         selectedDate = format(new Date(), "MMMM-yyyy").toString()
-//     }
-//     let params = new URLSearchParams({ monthSelected: selectedDate });
+async function fetchData(selectedDate: string, setAthletes: any) {
+    if (selectedDate == "") {
+        console.log("selectedDate is empty - setting to current month");
+        selectedDate = format(new Date(), "MMMM-yyyy").toString()
+    }
+    let params = new URLSearchParams({ monthSelected: selectedDate });
 
-//     let apiUrl = `http://localhost:8080/dataapi/rider_totals?${params}`;
-//     console.log(apiUrl);
-//     const response = await fetch(apiUrl);
-//     const data: StravaStatsDataType = await response.json();
-//     setAthletes(data);
-// }
+    let apiUrl = `http://localhost:8080/dataapi/rider_totals?${params}`;
+    console.log(apiUrl);
+    const response = await fetch(apiUrl);
+    const data: StravaStatsDataType = await response.json();
+    setAthletes(data);
+}
 
 
 export function KATable({ date }: { date: string }) {
@@ -41,28 +42,12 @@ export function KATable({ date }: { date: string }) {
     const [athletes, setAthletes] = useState<StravaStatsDataType>();
 
 
-
-    async function fetchData(selectedDate: string) {
-        if (selectedDate == "") {
-            selectedDate = format(new Date(), "MMMM-yyyy").toString()
-        }
-        let params = new URLSearchParams({ monthSelected: selectedDate });
-
-        let apiUrl = `http://localhost:8080/dataapi/rider_totals?${params}`;
-        console.log(apiUrl);
-        const response = await fetch(apiUrl);
-        const data: StravaStatsDataType = await response.json();
-        setAthletes(data);
-        console.log(data);
-
-    }
-
     const table = useTable();
 
 
     useEffect(() => {
         console.log("useEffect: " + date);
-        fetchData(date);
+        fetchData(date, setAthletes);
         console.log(athletes?.MaleSorted);
         table.loadData();
     }, [date]);

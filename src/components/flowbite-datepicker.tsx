@@ -73,7 +73,7 @@ export function DemoComponent({ setDate }: { setDate: React.Dispatch<React.SetSt
                     handleChange(selectedDate);
                     console.log("Date Selected: " + selectedDate)
                     const FormattedDateString: string = format(selectedDate, "MMMM-yyyy").toString()
-                    setDate(FormattedDateString)
+                    setDate(FormattedDateString);
                     //fetchData(FormattedDateString);
 
 
