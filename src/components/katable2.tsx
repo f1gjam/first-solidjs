@@ -15,15 +15,23 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 
 
+import { format, set } from 'date-fns';
 import { formattedDate } from './flowbite-datepicker2'
-import { set } from 'date-fns';
 
 
 const emptyData: StravaStatsDataType = ({} as StravaStatsDataType);
+export const fetchedData = signal<StravaStatsDataType>(emptyData);
 
 
+const current_date: Date = new Date();
+const dateFormattedString: string = format(current_date, "MMMM-yyyy").toString()
 
-// export async function fetchData(selectedDate: string) {
+
+// async function fetchData(selectedDate: string) {
+//     if (selectedDate == "") {
+//         console.log("selectedDate is empty - setting to current month");
+//         selectedDate = format(new Date(), "MMMM-yyyy").toString()
+//     }
 //     let params = new URLSearchParams({ monthSelected: selectedDate });
 
 //     let apiUrl = `http://localhost:8080/dataapi/rider_totals?${params}`;
@@ -31,32 +39,26 @@ const emptyData: StravaStatsDataType = ({} as StravaStatsDataType);
 //     const response = await fetch(apiUrl);
 //     const data: StravaStatsDataType = await response.json();
 //     fetchedData.value = data;
-//     //console.log(fetchedData.value);
-//     //return data
+//     //setAthletes(fetchedData.value);
+
 // }
 
 
-export const fetchedData = signal<StravaStatsDataType>(emptyData);
+
+effect(() => {
 
 
+    //fetchData(formattedDate.value);
+
+    console.log(fetchedData.value);
+
+
+})
 
 export function KATable2() {
 
-    //const fetchedData = useSignal<StravaStatsDataType>(emptyData);
-
-
-    const [athletes, setAthletes] = useState<StravaStatsDataType>();
-
-    let tdata: StravaStatsDataType
-
-    effect(() => {
-
-        setAthletes(fetchedData.value);
-
-        console.log(fetchedData.value);
-        console.log(tdata);
-    })
-
+    const data = fetchedData.value;
+    console.log(data?.MaleSorted);
     const table = useTable();
 
 
@@ -65,7 +67,9 @@ export function KATable2() {
 
 
             <Table
-                data={athletes?.MaleSorted}
+
+                data={fetchedData.value?.MaleSorted}
+
                 table={table}
                 columns={
                     [

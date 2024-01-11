@@ -2,13 +2,15 @@ import Datepicker from "tailwind-datepicker-react"
 import { signal } from '@preact/signals-react'
 import React, { useState } from "react";
 import { format } from "date-fns";
+import type { StravaStatsDataType } from '../models/myTypes'
 
 
 
-//import { getData } from "./katable";
 
-//import { fetchData } from "./katable2";
+
+
 import { fetchedData } from "./katable2";
+
 
 const current_date: Date = new Date();
 
@@ -16,17 +18,31 @@ const dateFormattedString: string = format(current_date, "MMMM-yyyy").toString()
 
 export const formattedDate = signal<string>(dateFormattedString);
 
+async function fetchData(selectedDate: string) {
+    if (selectedDate == "") {
+        console.log("selectedDate is empty - setting to current month");
+        selectedDate = format(new Date(), "MMMM-yyyy").toString()
+    }
+    let params = new URLSearchParams({ monthSelected: selectedDate });
 
+    let apiUrl = `http://localhost:8080/dataapi/rider_totals?${params}`;
+    console.log(apiUrl);
+    const response = await fetch(apiUrl);
+    const data: StravaStatsDataType = await response.json();
+    fetchedData.value = data;
+
+}
 
 export function DemoComponent2() {
     const [show, setShow] = useState(false);
     const handleChange = (selectedDate: Date) => {
     }
     const handleClose = (state: boolean) => {
-        //getData();
 
         setShow(state)
     }
+
+    fetchData("");
 
     return (
         <div>
@@ -77,26 +93,11 @@ export function DemoComponent2() {
                     handleChange(selectedDate);
                     console.log("Date Selected: " + selectedDate)
                     const FormattedDateString: string = format(selectedDate, "MMMM-yyyy").toString()
+
+
                     formattedDate.value = FormattedDateString;
-                    //fetchData(FormattedDateString);
 
-
-                    async function fetchData(selectedDate: string) {
-                        let params = new URLSearchParams({ monthSelected: selectedDate });
-
-                        let apiUrl = `http://localhost:8080/dataapi/rider_totals?${params}`;
-                        console.log(apiUrl);
-                        const response = await fetch(apiUrl);
-                        let data = await response.json();
-                        //eeturn await response.json();
-                        fetchedData.value = data;
-
-                    }
-                    // let data = fetchData(FormattedDateString);
-                    // data.then((data) => {
-                    //     fetchedData.value = data;
-                    // })
-
+                    fetchData(formattedDate.value);
 
                 }}
                 show={show} setShow={handleClose} />
