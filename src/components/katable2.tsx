@@ -1,14 +1,13 @@
 import 'flowbite';
-import type { StravaStatsDataType } from '../models/myTypes'
-
 import 'ka-table/style.css';
 
 
 import { Table, useTable } from 'ka-table';
 import { DataType, EditingMode, SortingMode, PagingPosition } from 'ka-table/enums';
+import { signal } from '@preact/signals-react'
+import { format } from "date-fns";
 
-import { effect, signal, useSignal } from '@preact/signals-react'
-
+import type { StravaStatsDataType } from '../models/myTypes'
 
 //import { myTestData } from "../models/data";
 
@@ -16,11 +15,27 @@ import { effect, signal, useSignal } from '@preact/signals-react'
 const emptyData: StravaStatsDataType = ({} as StravaStatsDataType);
 export const fetchedData = signal<StravaStatsDataType>(emptyData);
 
+export async function fetchData(selectedDate: string) {
+
+    if (selectedDate === "") {
+        console.log("selectedDate is empty - setting to current month");
+        selectedDate = format(new Date(), "MMMM-yyyy").toString()
+    }
+    let params = new URLSearchParams({ monthSelected: selectedDate });
+
+    let apiUrl = `http://localhost:8080/dataapi/rider_totals?${params}`;
+    console.log(apiUrl);
+    const response = await fetch(apiUrl);
+    const data: StravaStatsDataType = await response.json();
+    fetchedData.value = data;
+
+}
+
+fetchData("");
 
 
 export function KATable2() {
 
-    const data = fetchedData.value;
     const table = useTable();
 
 
