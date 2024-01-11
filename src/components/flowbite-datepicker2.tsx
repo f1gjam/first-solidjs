@@ -33,6 +33,9 @@ async function fetchData(selectedDate: string) {
 
 }
 
+fetchData("");
+
+
 export function DemoComponent2() {
     const [show, setShow] = useState(false);
     const handleChange = (selectedDate: Date) => {
@@ -42,7 +45,6 @@ export function DemoComponent2() {
         setShow(state)
     }
 
-    fetchData("");
 
     return (
         <div>
