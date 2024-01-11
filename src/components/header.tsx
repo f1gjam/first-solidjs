@@ -61,7 +61,7 @@ export function Header({ setDate }: { setDate: React.Dispatch<React.SetStateActi
                                     </ul>
                                 </div>
 
-                                {/* <DatePickr {setDate = { setDate }} /> */}
+                                {/* <DatePickr setDate={setDate} /> */}
                                 <DemoComponent setDate={setDate} />
 
                             </div>
@@ -73,6 +73,7 @@ export function Header({ setDate }: { setDate: React.Dispatch<React.SetStateActi
 
         </nav>
 
+        <DatePickr setDate={setDate} />
 
 
 
