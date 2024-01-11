@@ -17,10 +17,6 @@ const emptyData: StravaStatsDataType = ({} as StravaStatsDataType);
 export const fetchedData = signal<StravaStatsDataType>(emptyData);
 
 
-effect(() => {
-
-    console.log(fetchedData.value);
-})
 
 export function KATable2() {
 
