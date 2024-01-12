@@ -3,27 +3,25 @@ import { signal } from '@preact/signals-react'
 import React, { useState } from "react";
 import { format } from "date-fns";
 
+import { fetchData } from "./katable";
 
-
-//import { fetchedData } from "./katable2";
 
 const current_date: Date = new Date();
 
 const dateFormattedString: string = format(current_date, "MMMM-yyyy").toString()
 
-//export const formattedDate = signal<string>(dateFormattedString);
+export const formattedDate = signal<string>(dateFormattedString);
 
 
-
-export function DemoComponent({ setDate }: { setDate: React.Dispatch<React.SetStateAction<string>> }) {
+export function DemoComponent() {
     const [show, setShow] = useState(false);
     const handleChange = (selectedDate: Date) => {
     }
     const handleClose = (state: boolean) => {
-        //getData();
 
         setShow(state)
     }
+
 
     return (
         <div>
@@ -59,6 +57,7 @@ export function DemoComponent({ setDate }: { setDate: React.Dispatch<React.SetSt
                     defaultDate: new Date(),
                     language: "en",
                     disabledDates: [],
+                    //weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
                     inputNameProp: "date",
                     inputIdProp: "date",
                     inputPlaceholderProp: "Select Date",
@@ -73,11 +72,11 @@ export function DemoComponent({ setDate }: { setDate: React.Dispatch<React.SetSt
                     handleChange(selectedDate);
                     console.log("Date Selected: " + selectedDate)
                     const FormattedDateString: string = format(selectedDate, "MMMM-yyyy").toString()
-                    setDate(FormattedDateString);
-                    //fetchData(FormattedDateString);
 
 
+                    formattedDate.value = FormattedDateString;
 
+                    fetchData(formattedDate.value);
 
                 }}
                 show={show} setShow={handleClose} />

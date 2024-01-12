@@ -5,14 +5,13 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 import { Main } from './Main';
-import { Main2 } from './Main2';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Main2 />
+    <Main />
   </React.StrictMode>
 );
 

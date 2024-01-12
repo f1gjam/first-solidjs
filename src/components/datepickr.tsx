@@ -17,7 +17,7 @@ const dateFormattedString: string = format(current_date, "MMMM-yyyy").toString()
 export const formattedDate = signal<string>(dateFormattedString);
 
 
-export function DatePickr({ setDate }: { setDate: React.Dispatch<React.SetStateAction<string>> }) {
+export function DatePickr() {
 
 
     const [startDate, setStartDate] = useState(current_date);
@@ -38,7 +38,7 @@ export function DatePickr({ setDate }: { setDate: React.Dispatch<React.SetStateA
                 const FormattedDateString: string = format(startDate, "MMMM-yyyy").toString()
 
                 formattedDate.value = FormattedDateString;
-                setDate(FormattedDateString);
+                //setDate(FormattedDateString);
                 console.log(FormattedDateString);
             }}
         />

@@ -1,10 +1,11 @@
 import 'flowbite';
 
 
-import { DatePickr2 } from './datepickr2';
+import { DatePickr } from './datepickr';
+import { DemoComponent } from './flowbite-datepicker';
 import { DemoComponent2 } from './flowbite-datepicker2';
 
-export function Header2() {
+export function Header({ setDate }: { setDate: React.Dispatch<React.SetStateAction<string>> }) {
     return (<header className="header">
 
         <h1 className="smin-h-screen grid place-content-center">LEADERBOARD - CURRENTLY IN BETA TESTING</h1>
@@ -61,7 +62,7 @@ export function Header2() {
                                 </div>
 
                                 {/* <DatePickr setDate={setDate} /> */}
-                                <DemoComponent2 />
+                                <DemoComponent setDate={setDate} />
 
                             </div>
                         </div>
@@ -72,7 +73,7 @@ export function Header2() {
 
         </nav>
 
-        {/* <DatePickr2 /> */}
+        <DatePickr setDate={setDate} />
 
 
 
