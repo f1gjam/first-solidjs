@@ -25,7 +25,7 @@ export async function fetchData(selectedDate: string) {
     }
     let params = new URLSearchParams({ monthSelected: selectedDate });
 
-    let apiUrl = `http://localhost:8080/dataapi/rider_totals?${params}`;
+    let apiUrl = `https://iwww.unixcraft.dev/dataapi/rider_totals?${params}`;
     console.log(apiUrl);
     const response = await fetch(apiUrl);
     const data: StravaStatsDataType = await response.json();
