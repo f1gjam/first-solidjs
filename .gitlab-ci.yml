@@ -32,9 +32,9 @@ dockerize:
 
 
 
-portainer-deploy:
-  stage: deploy-portainer
-  script:
-    - apk --no-cache add curl
-    - curl -k -X POST https://192.168.1.10:9443/api/stacks/webhooks/39feeb36-e928-41ed-9a2c-f44e92ac151d
+# portainer-deploy:
+#   stage: deploy-portainer
+#   script:
+#     - apk --no-cache add curl
+#     - curl -k -X POST https://192.168.1.10:9443/api/stacks/webhooks/39feeb36-e928-41ed-9a2c-f44e92ac151d
 
