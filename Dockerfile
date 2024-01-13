@@ -2,21 +2,27 @@ FROM  node:current-alpine AS builder
 WORKDIR /appbuild
 
 # Copy the package.json and package-lock.json files to /app 
-# COPY package.json /appbuild
-# COPY package-lock.json /appbuild
-# COPY config-overrides.js /appbuild
-# COPY .babelrc /appbuild
-# COPY nginx /appbuild/nginx
+COPY package.json /appbuild
+COPY package-lock.json /appbuild
+COPY config-overrides.js /appbuild
+COPY .babelrc /appbuild
+COPY nginx /appbuild/nginx
 
 RUN ls -la
 RUN ls -la /appbuild
 RUN ls -la /appbuild/
+
 COPY . /appbuild
 
 # Install dependencies
 RUN npm install --loglevel warn
 
-COPY src /appbuild/src
+RUN ls -la
+RUN ls -la /appbuild
+RUN ls -la /appbuild/
+
+
+# COPY src /appbuild/src
 
 RUN npm run build
 
