@@ -36,6 +36,8 @@ RUN npm install  --loglevel
 
 COPY src /appbuild/src
 COPY public /appbuild/public
+COPY config-overrides.js /appbuild/config-overrides.js
+
 
 RUN npm run build
 
