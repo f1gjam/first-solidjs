@@ -30,6 +30,7 @@ WORKDIR /appbuild
 
 # Copy the package.json and package-lock.json files to /app 
 COPY package*.json /appbuild
+COPY nginx /appbuild/nginx
 
 # Install dependencies
 RUN npm install  --loglevel
@@ -48,16 +49,28 @@ RUN npm run build
 
 
 
-FROM node:current-alpine AS final
-WORKDIR /app
-COPY --from=builder ./appbuild/build/ /app/
-COPY --from=builder ./appbuild/package*.json /app/
+FROM nginx:alpine
+COPY --from=builder /appbuild /usr/share/nginx/html
+COPY --from=build /appbuild/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 3000
+CMD ["nginx", "-g", "daemon off;"]
 
-# Expose port 3000
-Expose 3000
 
-# Start the server
-CMD ["npm","start"]
+
+# FROM node:current-alpine AS final
+# WORKDIR /app
+# COPY --from=builder ./appbuild/build/ /app/
+# COPY --from=builder ./appbuild/package*.json /app/
+
+# # Expose port 3000
+# EXPOSE 3000
+
+# # Start the server
+# CMD ["npm","start"]
+
+
+
+
 
 
 # # Create app directory
