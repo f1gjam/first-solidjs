@@ -32,7 +32,7 @@ WORKDIR /appbuild
 COPY package*.json /appbuild
 
 # Install dependencies
-RUN npm install  --loglevel warn --production
+RUN npm install  --loglevel
 
 COPY src /appbuild/src
 COPY public /appbuild/public
