@@ -29,8 +29,8 @@ FROM  node:current-alpine AS builder
 WORKDIR /appbuild
 
 # Copy the package.json and package-lock.json files to /app 
-COPY package*.json /appbuild/
-COPY nginx /appbuild/nginx
+COPY package*.json .//
+COPY nginx ./nginx
 
 # Install dependencies
 RUN npm install --loglevel warn
