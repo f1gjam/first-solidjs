@@ -39,8 +39,10 @@ RUN npm run build
 
 
 FROM nginx:alpine AS final
-COPY --from=builder /appbuild/build/* /usr/share/nginx/html/
+COPY --from=builder /appbuild/build /usr/share/nginx/html/
 COPY --from=builder /appbuild/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+RUN ls -la /usr/share/nginx/html/
+
 EXPOSE 3000
 CMD ["nginx", "-g", "daemon off;"]
 
