@@ -35,7 +35,7 @@ COPY nginx /appbuild/nginx
 # Install dependencies
 RUN npm install --loglevel warn
 
-COPY . /appbuild
+# COPY . /appbuild
 RUN npm run build
 
 
