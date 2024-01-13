@@ -3,7 +3,9 @@ import 'ka-table/style.css';
 
 
 import { Table, useTable } from 'ka-table';
-import { DataType, EditingMode, SortingMode, PagingPosition } from 'ka-table/enums';
+import { DataType, EditingMode, SortDirection, SortingMode, PagingPosition } from 'ka-table/enums';
+import { Column } from 'ka-table/models';
+
 import { signal } from '@preact/signals-react'
 import { format } from "date-fns";
 
@@ -51,7 +53,10 @@ export function KATable() {
                 columns={
                     [
                         { key: 'AthleteName', title: 'Athlete Name', dataType: DataType.String, isSortable: true },
-                        { key: 'TotalDistance', title: 'Total Distance', dataType: DataType.Number, isSortable: true },
+                        {
+                            key: 'TotalDistance', title: 'Total Distance', dataType: DataType.Number, isSortable: true,
+                            sortDirection: SortDirection.Descend
+                        },
                         { key: 'TotalOutdoorDistance', title: 'Total Outdoor Distance', dataType: DataType.Number, isSortable: true },
                         { key: 'TotalIndoorDistance', title: 'Total Indoor Distance', dataType: DataType.Number, isSortable: true },
                         { key: 'PercentIndoor', title: 'Percentage Indoor', dataType: DataType.Number, isSortable: true },
@@ -68,9 +73,39 @@ export function KATable() {
                     pageSizes: [5, 10, 15],
                     position: PagingPosition.Bottom
                 }}
-                editingMode={EditingMode.Cell}
+                editingMode={EditingMode.None}
                 rowKeyField={'AthleteID'}
                 sortingMode={SortingMode.Single}
+                childComponents={{
+                    headCell: {
+                        elementAttributes: (props) => {
+                            if (props.column.key === 'column0') {
+                                return {
+                                    style: {
+                                        ...props.column.style,
+                                        position: 'sticky',
+                                        left: 0,
+                                        zIndex: 10,
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    cell: {
+                        elementAttributes: (props) => {
+                            if (props.column.key === 'column0') {
+                                return {
+                                    style: {
+                                        ...props.column.style,
+                                        position: 'sticky',
+                                        left: 0,
+                                        backgroundColor: '#eee',
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }}
             />
 
         </div >

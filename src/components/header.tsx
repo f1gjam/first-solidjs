@@ -61,7 +61,9 @@ export function Header() {
                                 </div>
 
                                 {/* <DatePickr setDate={setDate} /> */}
-                                <DemoComponent />
+                                {/* <DemoComponent /> */}
+                                <DatePickr />
+
 
                             </div>
                         </div>
@@ -71,14 +73,6 @@ export function Header() {
             </div>
 
         </nav>
-
-        {/* <DatePickr2 /> */}
-
-
-
-
-
-
 
     </header >
     )
