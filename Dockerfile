@@ -29,7 +29,8 @@ FROM  node:current-alpine AS builder
 WORKDIR /appbuild
 
 # Copy the package.json and package-lock.json files to /app 
-COPY package.json /appbuild
+COPY package.json /appbuild/package.json
+COPY package-lock.json /appbuild/package-lock.json
 COPY nginx /appbuild/nginx
 # COPY . /appbuild
 
