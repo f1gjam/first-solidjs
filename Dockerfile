@@ -32,6 +32,9 @@ WORKDIR /appbuild
 COPY package.json /appbuild/
 COPY package-lock.json /appbuild/
 COPY nginx /appbuild/nginx
+RUN ls -la
+RUN ls -la /appbuild
+RUN ls -la /appbuild/
 # COPY . /appbuild
 
 # Install dependencies
