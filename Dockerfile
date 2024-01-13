@@ -50,8 +50,8 @@ RUN npm run build
 
 FROM node:current-alpine AS final
 WORKDIR /app
-COPY --from=builder ./appbuild/build ./
-COPY --from=builder package*.json ./
+COPY --from=builder ./appbuild/build/ /app/
+COPY --from=builder package*.json /app/
 
 # Expose port 3000
 Expose 3000
