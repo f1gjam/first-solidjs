@@ -17,6 +17,7 @@ dockerize:
   script:
     - export LATEST_IMAGE_TAG=$CI_REGISTRY_IMAGE/${CI_PROJECT_NAME}-${CI_COMMIT_REF_SLUG}:latest
     - export BUILD_IMAGE_TAG=$CI_REGISTRY_IMAGE/${CI_PROJECT_NAME}-${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHORT_SHA}
+    - export BUILDKIT_PROGRESS=plain
     - docker build --progress=plain --no-cache --tag "$BUILD_IMAGE_TAG" --tag "$LATEST_IMAGE_TAG" .
     # - wget https://github.com/aquasecurity/trivy/releases/download/v0.37.3/trivy_0.37.3_Linux-64bit.tar.gz
     # - tar -zxvf trivy_0.37.3_Linux-64bit.tar.gz
