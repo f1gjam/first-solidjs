@@ -29,28 +29,28 @@ FROM  node:current-alpine AS builder
 WORKDIR /appbuild
 
 # Copy the package.json and package-lock.json files to /app 
-COPY package*.json .//
-COPY nginx ./nginx
+COPY package*.json /appbuild/
+COPY nginx /appbuild/nginx
 
 # Install dependencies
-# RUN npm install #--loglevel warn
-RUN npm install 
+RUN npm install --loglevel warn
 
 COPY . /appbuild
+RUN npm run build
+
 
 # COPY src /appbuild/src
 # COPY public /appbuild/public
 # COPY config-overrides.js /appbuild/config-overrides.js
 
 
-RUN npm run build
 
 # copy index.html /appbuild/index.html
 # copy README.md /appbuild/README.md
 
 
 
-FROM nginx:alpine
+FROM nginx:alpine AS final
 COPY --from=builder /appbuild /usr/share/nginx/html
 COPY --from=builder /appbuild/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 3000
