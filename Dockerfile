@@ -4,6 +4,8 @@ WORKDIR /appbuild
 # Copy the package.json and package-lock.json files to /app 
 COPY package.json /appbuild
 COPY package-lock.json /appbuild
+COPY config-overrides.js /appbuild
+COPY .babelrc /appbuild
 COPY nginx /appbuild/nginx
 
 RUN ls -la
