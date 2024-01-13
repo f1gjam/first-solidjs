@@ -32,6 +32,8 @@ WORKDIR /appbuild
 COPY package.json /appbuild/
 COPY package-lock.json /appbuild/
 COPY nginx /appbuild/nginx
+COPY src /appbuild/src
+
 RUN ls -la
 RUN ls -la /appbuild
 RUN ls -la /appbuild/
