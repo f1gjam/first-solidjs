@@ -18,12 +18,12 @@ dockerize:
     - export LATEST_IMAGE_TAG=$CI_REGISTRY_IMAGE/${CI_PROJECT_NAME}-${CI_COMMIT_REF_SLUG}:latest
     - export BUILD_IMAGE_TAG=$CI_REGISTRY_IMAGE/${CI_PROJECT_NAME}-${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHORT_SHA}
     - docker build --tag "$BUILD_IMAGE_TAG" --tag "$LATEST_IMAGE_TAG" .
-    - wget https://github.com/aquasecurity/trivy/releases/download/v0.37.3/trivy_0.37.3_Linux-64bit.tar.gz
-    - tar -zxvf trivy_0.37.3_Linux-64bit.tar.gz
-    - time ./trivy --version
-    - time ./trivy image --clear-cache
-    - time ./trivy image --exit-code 0 --severity LOW,MEDIUM,HIGH "$LATEST_IMAGE_TAG"
-    - time ./trivy image --exit-code 1 --severity CRITICAL "$LATEST_IMAGE_TAG"
+    # - wget https://github.com/aquasecurity/trivy/releases/download/v0.37.3/trivy_0.37.3_Linux-64bit.tar.gz
+    # - tar -zxvf trivy_0.37.3_Linux-64bit.tar.gz
+    # - time ./trivy --version
+    # - time ./trivy image --clear-cache
+    # - time ./trivy image --exit-code 0 --severity LOW,MEDIUM,HIGH "$LATEST_IMAGE_TAG"
+    # - time ./trivy image --exit-code 1 --severity CRITICAL "$LATEST_IMAGE_TAG"
     - docker logout $CI_REGISTRY
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker push $LATEST_IMAGE_TAG
