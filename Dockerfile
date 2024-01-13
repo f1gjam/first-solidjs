@@ -33,7 +33,7 @@ COPY package*.json /appbuild
 COPY nginx /appbuild/nginx
 
 # Install dependencies
-RUN npm install  --loglevel
+RUN npm install  --loglevel info
 
 COPY . /appbuild
 
