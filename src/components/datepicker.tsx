@@ -5,7 +5,7 @@ import DatePicker, { PickerValue, utils } from '@rnwonder/solid-date-picker';
 const today = new Date();
 const formattedDate = utils().formatDate(today, { format: "MMM-yyyy" });
 
-
+import { setData2, fetchData } from './tantable';
 
 export const [date, setDate] = createSignal
     <PickerValue>({
@@ -61,6 +61,9 @@ export function DatePickerComponent() {
                             label: formattedSelectedDate,
                         })
                     console.log(date().value.selected);
+                    setData2(formattedSelectedDate);
+                    fetchData(formattedSelectedDate);
+
 
                 }
 
