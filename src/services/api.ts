@@ -56,29 +56,48 @@ const getCurrentYear = () => {
   return `January-${year}`;
 };
 
+export interface LeaderboardResponse {
+  Male?: any;
+  MaleSorted?: AthleteData[];
+  Female?: any;
+  FemaleSorted?: AthleteData[];
+}
+
 export const api = {
   // Get monthly rider totals (cycling)
   // monthSelected format: "December-2025" (optional, defaults to current month)
   getMonthlyRiderTotals: async (monthSelected?: string): Promise<AthleteData[]> => {
     const params = monthSelected ? { monthSelected } : { monthSelected: getCurrentMonth() };
-    const response = await apiClient.get('/dataapi/rider_totals', { params });
-    return response.data;
+    const response = await apiClient.get<LeaderboardResponse>('/dataapi/rider_totals', { params });
+    
+    // Combine male and female athletes from the response
+    const maleAthletes = response.data.MaleSorted || [];
+    const femaleAthletes = response.data.FemaleSorted || [];
+    return [...maleAthletes, ...femaleAthletes];
   },
 
   // Get yearly rider totals (cycling) 
   // monthSelected format: "January-2025" (optional, defaults to current year)
   getYearlyRiderTotals: async (monthSelected?: string): Promise<AthleteData[]> => {
     const params = monthSelected ? { monthSelected } : { monthSelected: getCurrentYear() };
-    const response = await apiClient.get('/dataapi/rider_yearly_totals', { params });
-    return response.data;
+    const response = await apiClient.get<LeaderboardResponse>('/dataapi/rider_yearly_totals', { params });
+    
+    // Combine male and female athletes from the response
+    const maleAthletes = response.data.MaleSorted || [];
+    const femaleAthletes = response.data.FemaleSorted || [];
+    return [...maleAthletes, ...femaleAthletes];
   },
 
   // Get monthly runner totals (running)
   // monthSelected format: "December-2025" (optional, defaults to current month)
   getMonthlyRunnerTotals: async (monthSelected?: string): Promise<AthleteData[]> => {
     const params = monthSelected ? { monthSelected } : { monthSelected: getCurrentMonth() };
-    const response = await apiClient.get('/dataapi/runner_totals', { params });
-    return response.data;
+    const response = await apiClient.get<LeaderboardResponse>('/dataapi/runner_totals', { params });
+    
+    // Combine male and female athletes from the response
+    const maleAthletes = response.data.MaleSorted || [];
+    const femaleAthletes = response.data.FemaleSorted || [];
+    return [...maleAthletes, ...femaleAthletes];
   },
 
   // Weekly leaderboard - use current month data
