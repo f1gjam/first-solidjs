@@ -2,8 +2,8 @@
 FROM node:18-alpine AS builder
 
 # Build arguments for metadata and configuration
-ARG BUILD_DATE
-ARG VCS_REF
+ARG BUILD_DATE=""
+ARG VCS_REF=""
 ARG REACT_APP_API_URL=https://www.unixcraft.dev
 
 # Set environment variables
@@ -14,7 +14,7 @@ WORKDIR /app
 
 # Install dependencies first (better layer caching)
 COPY package.json package-lock.json ./
-RUN npm ci --only=production --silent
+RUN npm ci --silent
 
 # Copy necessary config files
 COPY config-overrides.js .babelrc ./
@@ -29,6 +29,10 @@ RUN npm run build
 
 # Production stage
 FROM nginx:1.25-alpine AS final
+
+# Build arguments for labels
+ARG BUILD_DATE=""
+ARG VCS_REF=""
 
 # Metadata labels
 LABEL maintainer="support@unixcraft.dev"
