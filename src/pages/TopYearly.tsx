@@ -69,7 +69,9 @@ export default function TopYearly() {
     <div className="rounded-xl border border-border bg-card p-6 hover:shadow-lg transition-shadow">
       <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-2">{title}</h3>
       <p className="text-2xl font-bold text-foreground mb-1">{athlete.AthleteName}</p>
-      <p className="text-3xl font-display font-bold text-primary">{value.toFixed(1)} {unit}</p>
+      <p className="text-3xl font-display font-bold text-primary">
+        {unit === 'mi' ? (value * 0.621371).toFixed(1) : value.toFixed(1)} {unit}
+      </p>
     </div>
   );
 
@@ -124,14 +126,14 @@ export default function TopYearly() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <StatCard title="Total Distance" athlete={topAthletes.totalDistance} value={topAthletes.totalDistance.TotalDistance} unit="km" />
-            <StatCard title="Total Outdoor Distance" athlete={topAthletes.totalOutdoorDistance} value={topAthletes.totalOutdoorDistance.TotalOutdoorDistance} unit="km" />
-            <StatCard title="Total Indoor Distance" athlete={topAthletes.totalIndoorDistance} value={topAthletes.totalIndoorDistance.TotalIndoorDistance} unit="km" />
+            <StatCard title="Total Distance" athlete={topAthletes.totalDistance} value={topAthletes.totalDistance.TotalDistance} unit="mi" />
+            <StatCard title="Total Outdoor Distance" athlete={topAthletes.totalOutdoorDistance} value={topAthletes.totalOutdoorDistance.TotalOutdoorDistance} unit="mi" />
+            <StatCard title="Total Indoor Distance" athlete={topAthletes.totalIndoorDistance} value={topAthletes.totalIndoorDistance.TotalIndoorDistance} unit="mi" />
             <StatCard title="Total Elevation" athlete={topAthletes.totalElevation} value={topAthletes.totalElevation.TotalElevation} unit="m" />
             <StatCard title="Total Outdoor Elevation" athlete={topAthletes.totalOutdoorElevation} value={topAthletes.totalOutdoorElevation.TotalOutdoorElevation} unit="m" />
             <StatCard title="Total Indoor Elevation" athlete={topAthletes.totalIndoorElevation} value={topAthletes.totalIndoorElevation.TotalIndoorElevation} unit="m" />
-            <StatCard title="Longest Outdoor Ride" athlete={topAthletes.longestOutdoorRide} value={topAthletes.longestOutdoorRide.LongestOutdoorRide} unit="km" />
-            <StatCard title="Longest Indoor Ride" athlete={topAthletes.longestIndoorRide} value={topAthletes.longestIndoorRide.LongestIndoorRide} unit="km" />
+            <StatCard title="Longest Outdoor Ride" athlete={topAthletes.longestOutdoorRide} value={topAthletes.longestOutdoorRide.LongestOutdoorRide} unit="mi" />
+            <StatCard title="Longest Indoor Ride" athlete={topAthletes.longestIndoorRide} value={topAthletes.longestIndoorRide.LongestIndoorRide} unit="mi" />
             <StatCard title="Highest Outdoor Elevation" athlete={topAthletes.highestOutdoorElevation} value={topAthletes.highestOutdoorElevation.HighestOutdoorElevation} unit="m" />
             <StatCard title="Highest Indoor Elevation" athlete={topAthletes.highestIndoorElevation} value={topAthletes.highestIndoorElevation.HighestIndoorElevation} unit="m" />
           </div>

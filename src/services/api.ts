@@ -121,19 +121,23 @@ export const convertAthleteDataToTableFormat = (athletes: AthleteData[], sport: 
     const totalTime = athlete.TotalOutdoorRideTimeInSeconds + athlete.TotalIndoorRideTimeInSeconds;
     const hours = Math.floor(totalTime / 3600);
     const minutes = Math.floor((totalTime % 3600) / 60);
-    const avgSpeed = totalTime > 0 ? (athlete.TotalDistance / (totalTime / 3600)) : 0;
+    
+    // Convert km to miles (1 km = 0.621371 miles)
+    const totalDistanceMiles = athlete.TotalDistance * 0.621371;
+    const avgSpeed = totalTime > 0 ? (totalDistanceMiles / (totalTime / 3600)) : 0;
+    const longestRideMiles = Math.max(athlete.LongestOutdoorRide, athlete.LongestIndoorRide) * 0.621371;
     
     return {
       rank: index + 1,
       name: athlete.AthleteName,
       gender: athlete.AthleteSex === 'M' ? 'male' as const : 'female' as const,
       sport,
-      distance: Math.round(athlete.TotalDistance),
+      distance: Math.round(totalDistanceMiles),
       elevation: Math.round(athlete.TotalElevation),
       time: `${hours}h ${minutes}m`,
       activities: (athlete.OutdoorDistances?.length || 0) + (athlete.IndoorDistances?.length || 0),
       avgSpeed: parseFloat(avgSpeed.toFixed(1)),
-      longestRide: Math.round(Math.max(athlete.LongestOutdoorRide, athlete.LongestIndoorRide)),
+      longestRide: Math.round(longestRideMiles),
     };
   });
 };
