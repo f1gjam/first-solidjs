@@ -88,22 +88,22 @@ export function Header() {
                                     <p className="px-4 py-1 text-xs font-semibold text-gray-500 dark:text-gray-400">Running</p>
                                 </li>
                                 <li>
-                                    <Link to="/mens_running_monthly" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    <Link to="/mens_running_leaderboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                         Men's Running Monthly
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/mens_running_yearly" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    <Link to="/mens_running_yearly_leaderboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                         Men's Running Yearly
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/womens_running_monthly" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    <Link to="/womens_running_leaderboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                         Women's Running Monthly
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/womens_running_yearly" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    <Link to="/womens_running_yearly_leaderboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                         Women's Running Yearly
                                     </Link>
                                 </li>
@@ -171,16 +171,16 @@ export function Header() {
                                     Women's Cycling Yearly
                                 </Link>
                                 <p className="px-3 py-1 mt-2 text-xs font-semibold text-gray-500 uppercase">Running</p>
-                                <Link to="/mens_running_monthly" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                                <Link to="/mens_running_leaderboard" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
                                     Men's Running Monthly
                                 </Link>
-                                <Link to="/mens_running_yearly" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                                <Link to="/mens_running_yearly_leaderboard" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
                                     Men's Running Yearly
                                 </Link>
-                                <Link to="/womens_running_monthly" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                                <Link to="/womens_running_leaderboard" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
                                     Women's Running Monthly
                                 </Link>
-                                <Link to="/womens_running_yearly" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                                <Link to="/womens_running_yearly_leaderboard" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
                                     Women's Running Yearly
                                 </Link>
                             </div>
