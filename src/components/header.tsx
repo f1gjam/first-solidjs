@@ -55,6 +55,11 @@ export function Header() {
                         <div id="dropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-56 dark:bg-gray-700">
                             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                                 <li>
+                                    <Link to="/current_leaders" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        Current Month Leaders
+                                    </Link>
+                                </li>
+                                <li>
                                     <Link to="/mens_leaderboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                         Mens Cycling Monthly
                                     </Link>
@@ -131,6 +136,9 @@ export function Header() {
                             
                             <div className="border-t border-gray-700 mt-2 pt-2">
                                 <p className="px-3 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Leaderboards</p>
+                                <Link to="/current_leaders" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                                    Current Month Leaders
+                                </Link>
                                 <Link to="/mens_leaderboard" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
                                     Mens Cycling Monthly
                                 </Link>

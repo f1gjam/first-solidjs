@@ -17,6 +17,7 @@ import { FemaleRunningTable } from './components/femaleRunningTable';
 import { Documentation } from './components/documentation';
 import { Help } from './components/help';
 import { About } from './components/about';
+import CurrentLeaders from './pages/CurrentLeaders';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
@@ -33,6 +34,7 @@ root.render(
           <Route path="womens_yearly_leaderboard" element={<FemaleYearlyTable />} />
           <Route path="mens_running_leaderboard" element={<MaleRunningTable />} />
           <Route path="womens_running_leaderboard" element={<FemaleRunningTable />} />
+          <Route path="current_leaders" element={<CurrentLeaders />} />
           <Route path="documentation" element={<Documentation />} />
           <Route path="help" element={<Help />} />
           <Route path="about" element={<About />} />
