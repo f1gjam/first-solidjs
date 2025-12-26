@@ -42,23 +42,58 @@ export interface AthleteData {
   HighestIndoorElevation: number;
 }
 
+// Helper to get current month in "January-2025" format
+const getCurrentMonth = () => {
+  const date = new Date();
+  const month = date.toLocaleString('en-US', { month: 'long' });
+  const year = date.getFullYear();
+  return `${month}-${year}`;
+};
+
+// Helper to get current year in "January-2025" format
+const getCurrentYear = () => {
+  const year = new Date().getFullYear();
+  return `January-${year}`;
+};
+
 export const api = {
-  // Get yearly/all-time leaderboard data (this is the main endpoint)
-  getYearlyLeaderboard: async (): Promise<AthleteData[]> => {
-    const response = await apiClient.get('/dataapi/rider_yearly_totals');
+  // Get monthly rider totals (cycling)
+  // monthSelected format: "December-2025" (optional, defaults to current month)
+  getMonthlyRiderTotals: async (monthSelected?: string): Promise<AthleteData[]> => {
+    const params = monthSelected ? { monthSelected } : { monthSelected: getCurrentMonth() };
+    const response = await apiClient.get('/dataapi/rider_totals', { params });
     return response.data;
   },
 
-  // Weekly and monthly use the same yearly data for now
-  // TODO: Update when backend has separate weekly/monthly endpoints
+  // Get yearly rider totals (cycling) 
+  // monthSelected format: "January-2025" (optional, defaults to current year)
+  getYearlyRiderTotals: async (monthSelected?: string): Promise<AthleteData[]> => {
+    const params = monthSelected ? { monthSelected } : { monthSelected: getCurrentYear() };
+    const response = await apiClient.get('/dataapi/rider_yearly_totals', { params });
+    return response.data;
+  },
+
+  // Get monthly runner totals (running)
+  // monthSelected format: "December-2025" (optional, defaults to current month)
+  getMonthlyRunnerTotals: async (monthSelected?: string): Promise<AthleteData[]> => {
+    const params = monthSelected ? { monthSelected } : { monthSelected: getCurrentMonth() };
+    const response = await apiClient.get('/dataapi/runner_totals', { params });
+    return response.data;
+  },
+
+  // Weekly leaderboard - use current month data
   getWeeklyLeaderboard: async (): Promise<AthleteData[]> => {
-    const response = await apiClient.get('/dataapi/rider_yearly_totals');
-    return response.data;
+    return api.getMonthlyRiderTotals();
   },
 
+  // Monthly leaderboard
   getMonthlyLeaderboard: async (): Promise<AthleteData[]> => {
-    const response = await apiClient.get('/dataapi/rider_yearly_totals');
-    return response.data;
+    return api.getMonthlyRiderTotals();
+  },
+
+  // Yearly/All-time leaderboard
+  getYearlyLeaderboard: async (): Promise<AthleteData[]> => {
+    return api.getYearlyRiderTotals();
   },
 };
 
