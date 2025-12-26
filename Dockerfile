@@ -4,10 +4,10 @@ FROM node:18-alpine AS builder
 # Build arguments for metadata and configuration
 ARG BUILD_DATE=""
 ARG VCS_REF=""
-ARG REACT_APP_API_URL=https://www.unixcraft.dev
+ARG VITE_API_URL=https://www.unixcraft.dev
 
-# Set environment variables
-ENV REACT_APP_API_URL=$REACT_APP_API_URL
+# Set environment variables (Vite uses VITE_ prefix)
+ENV VITE_API_URL=$VITE_API_URL
 
 # Set working directory
 WORKDIR /app
@@ -18,8 +18,8 @@ COPY package.json package-lock.json ./
 # Install all dependencies (including devDependencies needed for build)
 RUN npm ci --silent
 
-# Copy configuration files
-COPY config-overrides.js .babelrc tsconfig.json tsconfig.app.json tsconfig.node.json postcss.config.cjs tailwind.config.ts vite.config.ts components.json ./
+# Copy configuration files (updated to postcss.config.js and removed unused files)
+COPY tsconfig.json tsconfig.app.json tsconfig.node.json postcss.config.js tailwind.config.ts vite.config.ts components.json ./
 
 # Copy index.html (required by Vite)
 COPY index.html ./
@@ -31,7 +31,7 @@ COPY nginx ./nginx
 COPY public ./public
 COPY src ./src
 
-# Build the application
+# Build the application (Vite outputs to dist/ not build/)
 RUN npm run build
 
 # Production stage
@@ -53,8 +53,8 @@ LABEL org.opencontainers.image.version="2.0-beta"
 RUN addgroup -g 1001 -S appuser && \
     adduser -u 1001 -S appuser -G appuser
 
-# Copy built files from builder
-COPY --from=builder --chown=appuser:appuser /app/build /usr/share/nginx/html
+# Copy built files from builder (Vite outputs to dist/ not build/)
+COPY --from=builder --chown=appuser:appuser /app/dist /usr/share/nginx/html
 
 # Copy nginx configuration
 COPY --from=builder /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
