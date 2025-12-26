@@ -133,11 +133,11 @@ export const convertAthleteDataToTableFormat = (athletes: AthleteData[], sport: 
     const hours = Math.floor(totalTime / 3600);
     const minutes = Math.floor((totalTime % 3600) / 60);
     
-    // Backend returns distances in km, convert to miles (1 km = 0.621371 miles)
-    const totalDistanceMiles = athlete.TotalDistance * 0.621371;
-    const outdoorDistanceMiles = athlete.TotalOutdoorDistance * 0.621371;
-    const indoorDistanceMiles = athlete.TotalIndoorDistance * 0.621371;
-    const longestRideMiles = Math.max(athlete.LongestOutdoorRide, athlete.LongestIndoorRide) * 0.621371;
+    // Backend already returns distances in miles - no conversion needed
+    const totalDistanceMiles = athlete.TotalDistance;
+    const outdoorDistanceMiles = athlete.TotalOutdoorDistance;
+    const indoorDistanceMiles = athlete.TotalIndoorDistance;
+    const longestRideMiles = Math.max(athlete.LongestOutdoorRide || 0, athlete.LongestIndoorRide || 0);
     
     // Calculate percent indoor if not provided
     const percentIndoor = athlete.PercentIndoor ?? 
