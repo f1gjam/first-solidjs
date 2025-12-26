@@ -12,15 +12,19 @@ ENV REACT_APP_API_URL=$REACT_APP_API_URL
 # Set working directory
 WORKDIR /app
 
-# Install dependencies first (better layer caching)
+# Copy package files
 COPY package.json package-lock.json ./
+
+# Install all dependencies (including devDependencies needed for build)
 RUN npm ci --silent
 
-# Copy necessary config files
-COPY config-overrides.js .babelrc ./
+# Copy configuration files
+COPY config-overrides.js .babelrc tsconfig.json ./
+
+# Copy nginx configuration
 COPY nginx ./nginx
 
-# Copy source code
+# Copy all source files
 COPY public ./public
 COPY src ./src
 
