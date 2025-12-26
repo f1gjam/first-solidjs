@@ -19,7 +19,7 @@ COPY package.json package-lock.json ./
 RUN npm ci --silent
 
 # Copy configuration files
-COPY config-overrides.js .babelrc tsconfig.json postcss.config.cjs tailwind.config.ts vite.config.ts components.json ./
+COPY config-overrides.js .babelrc tsconfig.json tsconfig.app.json tsconfig.node.json postcss.config.cjs tailwind.config.ts vite.config.ts components.json ./
 
 # Copy index.html (required by Vite)
 COPY index.html ./
