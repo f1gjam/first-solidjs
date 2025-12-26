@@ -72,9 +72,9 @@ RUN sed -i 's|/var/run/nginx.pid|/tmp/nginx.pid|g' /etc/nginx/nginx.conf
 # Remove source maps
 RUN rm -rf /usr/share/nginx/html/*.map
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost:3000/ || exit 1
+# Health check using nc (netcat) which is available in alpine
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD nc -z localhost 3000 || exit 1
 
 # Switch to non-root user
 USER appuser
