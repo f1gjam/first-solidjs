@@ -191,9 +191,10 @@ export function LeaderboardTable({ data, title }: LeaderboardTableProps) {
             <SortIcon sorted={column.getIsSorted()} />
           </Button>
         ),
-        cell: ({ row }) => (
-          <span>{(row.getValue("percentIndoor") as number).toFixed(1)}%</span>
-        ),
+        cell: ({ row }) => {
+          const value = row.getValue("percentIndoor") as number | undefined;
+          return <span>{(value ?? 0).toFixed(1)}%</span>;
+        },
       },
       {
         accessorKey: "elevation",
