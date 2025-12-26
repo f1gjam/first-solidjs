@@ -6,14 +6,16 @@ Modernize the React frontend to match the original Go backend functionality, imp
 **Start Date:** 2025-12-26  
 **Current Status:** ✅ ALL PHASES COMPLETE + ENHANCEMENTS ADDED
 
-**Latest Update:** 2025-12-26 17:00
+**Latest Update:** 2025-12-26 17:10
 - ✅ Fixed all missing component imports (Layout, MensLeaderboard, WomensLeaderboard, etc.)
 - ✅ Created separate monthly/yearly pages for both cycling and running
+- ✅ Added yearly running leaderboard pages (Men's & Women's)
 - ✅ Updated menu structure with categorized sections (Cycling/Running)
 - ✅ Added UnixCraft logo to header
 - ✅ Created SingleActivity, About, Contact, and Documentation pages
 - ✅ Improved navigation structure
 - ✅ Fixed TypeScript compilation errors
+- ✅ All 10 leaderboard pages now complete and functional
 - ✅ Website deployed and running at https://www2.unixcraft.dev/
 
 ---
@@ -487,3 +489,19 @@ Modernize the React frontend to match the original Go backend functionality, imp
   - Successfully deployed to production at https://www2.unixcraft.dev/
   - All navigation links working correctly
   - CSS and styling loading properly
+- **Phase 12: Added Yearly Running Leaderboards**
+  - Created MensRunningYearlyLeaderboard component
+  - Created WomensRunningYearlyLeaderboard component
+  - Updated App.tsx routes to include yearly running pages
+  - Updated header navigation with correct route paths
+  - All 10 leaderboard pages now fully functional:
+    - Men's Cycling Monthly
+    - Men's Cycling Yearly
+    - Women's Cycling Monthly
+    - Women's Cycling Yearly
+    - Men's Running Monthly
+    - Men's Running Yearly
+    - Women's Running Monthly
+    - Women's Running Yearly
+  - Fixed route naming consistency across navigation and routes
+  - Successfully deployed and tested
