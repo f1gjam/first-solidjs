@@ -1,87 +1,71 @@
-FROM  node:current-alpine AS builder
-WORKDIR /appbuild
+# Build stage
+FROM node:18-alpine AS builder
 
-# Copy the package.json and package-lock.json files to /app 
-COPY package.json /appbuild
-COPY package-lock.json /appbuild
-COPY config-overrides.js /appbuild
-COPY .babelrc /appbuild
-COPY nginx /appbuild/nginx
+# Build arguments for metadata and configuration
+ARG BUILD_DATE
+ARG VCS_REF
+ARG REACT_APP_API_URL=https://www.unixcraft.dev
 
-RUN ls -la
-RUN ls -la /appbuild
-RUN ls -la /appbuild/
+# Set environment variables
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
 
-COPY . /appbuild
+# Set working directory
+WORKDIR /app
 
-# Install dependencies
-RUN npm install --loglevel warn
+# Install dependencies first (better layer caching)
+COPY package.json package-lock.json ./
+RUN npm ci --only=production --silent
 
-RUN ls -la
-RUN ls -la /appbuild
-RUN ls -la /appbuild/
+# Copy necessary config files
+COPY config-overrides.js .babelrc ./
+COPY nginx ./nginx
 
+# Copy source code
+COPY public ./public
+COPY src ./src
 
-# COPY src /appbuild/src
-
+# Build the application
 RUN npm run build
 
+# Production stage
+FROM nginx:1.25-alpine AS final
 
-# COPY src /appbuild/src
-# COPY public /appbuild/public
-# COPY config-overrides.js /appbuild/config-overrides.js
+# Metadata labels
+LABEL maintainer="support@unixcraft.dev"
+LABEL org.opencontainers.image.created="${BUILD_DATE}"
+LABEL org.opencontainers.image.revision="${VCS_REF}"
+LABEL org.opencontainers.image.title="Strava Club Stats Frontend"
+LABEL org.opencontainers.image.description="React frontend for Strava Club Stats leaderboard"
+LABEL org.opencontainers.image.version="2.0-beta"
 
+# Create non-root user
+RUN addgroup -g 1001 -S appuser && \
+    adduser -u 1001 -S appuser -G appuser
 
+# Copy built files from builder
+COPY --from=builder --chown=appuser:appuser /app/build /usr/share/nginx/html
 
-# copy index.html /appbuild/index.html
-# copy README.md /appbuild/README.md
+# Copy nginx configuration
+COPY --from=builder /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+RUN chown -R appuser:appuser /usr/share/nginx/html && \
+    chown appuser:appuser /etc/nginx/conf.d/default.conf
 
+# Create nginx cache and pid directories with correct permissions
+RUN mkdir -p /var/cache/nginx /var/run && \
+    chown -R appuser:appuser /var/cache/nginx /var/run
 
+# Remove unnecessary files
+RUN rm -rf /usr/share/nginx/html/*.map
 
-FROM nginx:alpine AS final
-COPY --from=builder /appbuild/build /usr/share/nginx/html/
-COPY --from=builder /appbuild/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-RUN ls -la /usr/share/nginx/html/
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:3000/ || exit 1
 
+# Switch to non-root user
+USER appuser
+
+# Expose port
 EXPOSE 3000
+
+# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
-
-
-
-
-
-
-
-# WORKDIR /build
-# COPY apiver1 /build/apiver1
-# COPY docs /build/docs
-# COPY helpers /build/helpers
-# COPY internallog /build/internallog
-# COPY models /build/models
-# COPY runtimeconfig /build/runtimeconfig
-# COPY templates /build/templates
-# COPY config.yaml /build
-# COPY go.mod /build
-# COPY go.sum /build
-# COPY main.go /build
-
-# RUN pwd
-# RUN ls -la
-# RUN go mod download && go build
-# RUN echo "after go commands"
-# RUN ls -la
-
-
-# FROM alpine:3.18
-# # add new user
-# RUN adduser -D appuser
-# USER appuser
-
-# WORKDIR /
-# COPY --from=builder /build/config.yaml ./
-# COPY --from=builder /build/templates ./templates
-# COPY --from=builder /build/mongoatlasautomation ./
-
-# EXPOSE 8080
-
-# ENTRYPOINT ["/mongoatlasautomation"]

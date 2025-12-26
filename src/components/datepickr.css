@@ -13,3 +13,15 @@
 .react-datepicker-popper {
     z-index: 9999 !important;
 }
+
+
+.react-datepicker__input-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    border-radius: 1px;
+}
+
+input {
+    border-radius: 1px;
+}

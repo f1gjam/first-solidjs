@@ -37,5 +37,5 @@ portainer-deploy:
   stage: deploy-portainer
   script:
     - apk --no-cache add curl
-    - curl -k -X POST https://192.168.1.10:9443/api/stacks/webhooks/89e5e892-ec73-411a-bfcd-5210e1b85155
+    - curl -k -X POST https://192.168.1.240:9443/api/webhooks/9ef7d6e6-6e46-49cd-9fe5-c9dd02a07ba0
 

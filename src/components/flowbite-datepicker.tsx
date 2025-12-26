@@ -3,7 +3,7 @@ import { signal } from '@preact/signals-react'
 import React, { useState } from "react";
 import { format } from "date-fns";
 
-import { fetchData } from "./katable";
+import { fetchData } from "./maleTable";
 
 
 const current_date: Date = new Date();

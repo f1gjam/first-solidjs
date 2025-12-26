@@ -1,0 +1,195 @@
+image: docker:24-cli
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_BUILDKIT: 1
+  # These should be set in GitLab CI/CD Settings -> Variables
+  # PORTAINER_WEBHOOK_URL
+  # CI_REGISTRY
+  # CI_REGISTRY_USER
+  # CI_REGISTRY_PASSWORD
+  # REACT_APP_API_URL
+
+services:
+  - docker:24-dind
+
+stages:
+  - validate
+  - test
+  - build
+  - security
+  - deploy
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+    - .npm/
+
+# ==================== VALIDATE STAGE ====================
+
+lint:
+  stage: validate
+  image: node:18-alpine
+  before_script:
+    - npm ci --cache .npm --prefer-offline
+  script:
+    - npm run lint || echo "No lint script found"
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+
+# ==================== TEST STAGE ====================
+
+unit-test:
+  stage: test
+  image: node:18-alpine
+  before_script:
+    - npm ci --cache .npm --prefer-offline
+  script:
+    - npm run test -- --coverage --watchAll=false
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+    paths:
+      - coverage/
+    expire_in: 30 days
+  only:
+    - merge_requests
+    - main
+
+# ==================== BUILD STAGE ====================
+
+build-docker:
+  stage: build
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - export LATEST_IMAGE_TAG=$CI_REGISTRY_IMAGE/${CI_PROJECT_NAME}-${CI_COMMIT_REF_SLUG}:latest
+    - export BUILD_IMAGE_TAG=$CI_REGISTRY_IMAGE/${CI_PROJECT_NAME}-${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHORT_SHA}
+    - export BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+    - |
+      docker build \
+        --build-arg BUILD_DATE=$BUILD_DATE \
+        --build-arg VCS_REF=$CI_COMMIT_SHORT_SHA \
+        --build-arg REACT_APP_API_URL=$REACT_APP_API_URL \
+        --cache-from $LATEST_IMAGE_TAG \
+        --tag "$BUILD_IMAGE_TAG" \
+        --tag "$LATEST_IMAGE_TAG" \
+        .
+    - docker push $BUILD_IMAGE_TAG
+    - docker push $LATEST_IMAGE_TAG
+    - echo "Built image:" $BUILD_IMAGE_TAG
+  after_script:
+    - docker logout $CI_REGISTRY
+  only:
+    - main
+    - develop
+    - tags
+
+# ==================== SECURITY STAGE ====================
+
+security-scan:
+  stage: security
+  image: aquasec/trivy:latest
+  variables:
+    GIT_STRATEGY: none
+  before_script:
+    - export LATEST_IMAGE_TAG=$CI_REGISTRY_IMAGE/${CI_PROJECT_NAME}-${CI_COMMIT_REF_SLUG}:latest
+    - trivy --version
+  script:
+    # Update vulnerability database
+    - trivy image --download-db-only
+    # Scan for all vulnerabilities (informational)
+    - trivy image --exit-code 0 --severity LOW,MEDIUM,HIGH --format table $LATEST_IMAGE_TAG
+    # Fail pipeline on CRITICAL vulnerabilities
+    - trivy image --exit-code 1 --severity CRITICAL --format table $LATEST_IMAGE_TAG
+  artifacts:
+    reports:
+      container_scanning: gl-container-scanning-report.json
+    paths:
+      - gl-container-scanning-report.json
+    expire_in: 30 days
+  allow_failure: false
+  only:
+    - main
+    - develop
+
+# ==================== DEPLOY STAGE ====================
+
+deploy-staging:
+  stage: deploy
+  before_script:
+    - apk --no-cache add curl jq
+  script:
+    - |
+      if [ -z "$PORTAINER_WEBHOOK_URL" ]; then
+        echo "Error: PORTAINER_WEBHOOK_URL not set"
+        exit 1
+      fi
+    # Use proper SSL verification (remove -k flag)
+    - |
+      response=$(curl -s -w "\n%{http_code}" -X POST "$PORTAINER_WEBHOOK_URL")
+      http_code=$(echo "$response" | tail -n1)
+      if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+        echo "Deployment webhook successful: HTTP $http_code"
+      else
+        echo "Deployment webhook failed: HTTP $http_code"
+        exit 1
+      fi
+    - sleep 10
+    - echo "Deployment to staging completed"
+  environment:
+    name: staging
+    url: https://staging.unixcraft.dev
+  only:
+    - develop
+
+deploy-production:
+  stage: deploy
+  before_script:
+    - apk --no-cache add curl jq
+  script:
+    - |
+      if [ -z "$PORTAINER_WEBHOOK_URL_PROD" ]; then
+        echo "Error: PORTAINER_WEBHOOK_URL_PROD not set"
+        exit 1
+      fi
+    - |
+      response=$(curl -s -w "\n%{http_code}" -X POST "$PORTAINER_WEBHOOK_URL_PROD")
+      http_code=$(echo "$response" | tail -n1)
+      if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+        echo "Production deployment webhook successful: HTTP $http_code"
+      else
+        echo "Production deployment webhook failed: HTTP $http_code"
+        exit 1
+      fi
+    - sleep 10
+    - echo "Deployment to production completed"
+  environment:
+    name: production
+    url: https://www.unixcraft.dev
+  when: manual
+  only:
+    - main
+    - tags
+
+# ==================== ROLLBACK (OPTIONAL) ====================
+
+rollback:
+  stage: deploy
+  script:
+    - echo "Rolling back to previous version"
+    - export PREVIOUS_IMAGE_TAG=$CI_REGISTRY_IMAGE/${CI_PROJECT_NAME}-${CI_COMMIT_REF_SLUG}:previous
+    # Add rollback logic here
+  when: manual
+  environment:
+    name: production
+    url: https://www.unixcraft.dev
+  only:
+    - main
