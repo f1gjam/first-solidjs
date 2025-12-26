@@ -60,33 +60,51 @@ export function Header() {
                                     </Link>
                                 </li>
                                 <li>
+                                    <hr className="my-1 border-gray-200 dark:border-gray-600" />
+                                    <p className="px-4 py-1 text-xs font-semibold text-gray-500 dark:text-gray-400">Cycling</p>
+                                </li>
+                                <li>
                                     <Link to="/mens_leaderboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        Mens Cycling Monthly
+                                        Men's Cycling Monthly
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to="/mens_yearly_leaderboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        Mens Cycling Yearly
+                                        Men's Cycling Yearly
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to="/womens_leaderboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        Womens Cycling Monthly
+                                        Women's Cycling Monthly
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to="/womens_yearly_leaderboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        Womens Cycling Yearly
+                                        Women's Cycling Yearly
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/mens_running_leaderboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        Mens Running
+                                    <hr className="my-1 border-gray-200 dark:border-gray-600" />
+                                    <p className="px-4 py-1 text-xs font-semibold text-gray-500 dark:text-gray-400">Running</p>
+                                </li>
+                                <li>
+                                    <Link to="/mens_running_monthly" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        Men's Running Monthly
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/womens_running_leaderboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        Womens Running
+                                    <Link to="/mens_running_yearly" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        Men's Running Yearly
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/womens_running_monthly" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        Women's Running Monthly
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/womens_running_yearly" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        Women's Running Yearly
                                     </Link>
                                 </li>
                             </ul>
@@ -139,23 +157,31 @@ export function Header() {
                                 <Link to="/current_leaders" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
                                     Current Month Leaders
                                 </Link>
+                                <p className="px-3 py-1 mt-2 text-xs font-semibold text-gray-500 uppercase">Cycling</p>
                                 <Link to="/mens_leaderboard" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
-                                    Mens Cycling Monthly
+                                    Men's Cycling Monthly
                                 </Link>
                                 <Link to="/mens_yearly_leaderboard" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
-                                    Mens Cycling Yearly
+                                    Men's Cycling Yearly
                                 </Link>
                                 <Link to="/womens_leaderboard" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
-                                    Womens Cycling Monthly
+                                    Women's Cycling Monthly
                                 </Link>
                                 <Link to="/womens_yearly_leaderboard" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
-                                    Womens Cycling Yearly
+                                    Women's Cycling Yearly
                                 </Link>
-                                <Link to="/mens_running_leaderboard" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
-                                    Mens Running
+                                <p className="px-3 py-1 mt-2 text-xs font-semibold text-gray-500 uppercase">Running</p>
+                                <Link to="/mens_running_monthly" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                                    Men's Running Monthly
                                 </Link>
-                                <Link to="/womens_running_leaderboard" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
-                                    Womens Running
+                                <Link to="/mens_running_yearly" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                                    Men's Running Yearly
+                                </Link>
+                                <Link to="/womens_running_monthly" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                                    Women's Running Monthly
+                                </Link>
+                                <Link to="/womens_running_yearly" className="block text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                                    Women's Running Yearly
                                 </Link>
                             </div>
                         </div>

@@ -12,12 +12,14 @@ import { MaleTable } from './components/maleTable';
 import { FemaleTable } from './components/femaleTable';
 import { MaleYearlyTable } from './components/maleYearlyTable';
 import { FemaleYearlyTable } from './components/femaleYearlyTable';
-import { MaleRunningTable } from './components/maleRunningTable';
-import { FemaleRunningTable } from './components/femaleRunningTable';
 import { Documentation } from './components/documentation';
 import { Help } from './components/help';
 import { About } from './components/about';
 import CurrentLeaders from './pages/CurrentLeaders';
+import { MensRunningMonthly } from './pages/MensRunningMonthly';
+import { WomensRunningMonthly } from './pages/WomensRunningMonthly';
+import { MensRunningYearly } from './pages/MensRunningYearly';
+import { WomensRunningYearly } from './pages/WomensRunningYearly';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
@@ -32,8 +34,10 @@ root.render(
           <Route path="womens_leaderboard" element={<FemaleTable />} />
           <Route path="mens_yearly_leaderboard" element={<MaleYearlyTable />} />
           <Route path="womens_yearly_leaderboard" element={<FemaleYearlyTable />} />
-          <Route path="mens_running_leaderboard" element={<MaleRunningTable />} />
-          <Route path="womens_running_leaderboard" element={<FemaleRunningTable />} />
+          <Route path="mens_running_monthly" element={<MensRunningMonthly />} />
+          <Route path="womens_running_monthly" element={<WomensRunningMonthly />} />
+          <Route path="mens_running_yearly" element={<MensRunningYearly />} />
+          <Route path="womens_running_yearly" element={<WomensRunningYearly />} />
           <Route path="current_leaders" element={<CurrentLeaders />} />
           <Route path="documentation" element={<Documentation />} />
           <Route path="help" element={<Help />} />
