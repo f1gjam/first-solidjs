@@ -12,44 +12,23 @@ const stats = [
 
 const leaderboards = [
   {
-    title: "Men's Cycling",
-    description: "Top male cyclists",
-    href: "/mens_leaderboard",
-    icon: Trophy,
+    title: "Weekly Leaderboard",
+    description: "Top performers this week",
+    href: "/weekly",
+    icon: Calendar,
     color: "from-blue-500 to-cyan-500",
   },
   {
-    title: "Women's Cycling",
-    description: "Top female cyclists",
-    href: "/womens_leaderboard",
+    title: "Monthly Leaderboard",
+    description: "Best of the month",
+    href: "/monthly",
     icon: Trophy,
-    color: "from-pink-500 to-purple-500",
-  },
-  {
-    title: "Men's Running",
-    description: "Top male runners",
-    href: "/mens_running_leaderboard",
-    icon: Activity,
-    color: "from-green-500 to-emerald-500",
-  },
-  {
-    title: "Women's Running",
-    description: "Top female runners",
-    href: "/womens_running_leaderboard",
-    icon: Activity,
-    color: "from-orange-500 to-amber-500",
-  },
-  {
-    title: "Monthly Leaders",
-    description: "This month's champions",
-    href: "/monthly_leaders",
-    icon: Calendar,
     color: "from-primary to-orange-400",
   },
   {
-    title: "Yearly Leaders",
-    description: "Best of the year",
-    href: "/yearly_leaders",
+    title: "All Time Leaders",
+    description: "Legends of the club",
+    href: "/all-time",
     icon: Trophy,
     color: "from-purple-500 to-pink-500",
   },
@@ -84,14 +63,14 @@ export default function Index() {
             </p>
             
             <div className="flex flex-wrap gap-4 justify-center animate-fade-in" style={{ animationDelay: "300ms" }}>
-              <Link to="/mens_leaderboard">
+              <Link to="/weekly">
                 <Button variant="hero" size="xl">
                   View Leaderboards
                 </Button>
               </Link>
-              <Link to="/documentation">
+              <Link to="/clubs">
                 <Button variant="outline" size="xl" className="border-white/30 text-white hover:bg-white/10 hover:text-white">
-                  Documentation
+                  Explore Clubs
                 </Button>
               </Link>
             </div>
@@ -132,7 +111,7 @@ export default function Index() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {leaderboards.map((board, index) => (
               <Link
                 key={board.href}
