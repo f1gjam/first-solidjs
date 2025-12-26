@@ -139,6 +139,10 @@ export const convertAthleteDataToTableFormat = (athletes: AthleteData[], sport: 
     const indoorDistanceMiles = athlete.TotalIndoorDistance * 0.621371;
     const longestRideMiles = Math.max(athlete.LongestOutdoorRide, athlete.LongestIndoorRide) * 0.621371;
     
+    // Calculate percent indoor if not provided
+    const percentIndoor = athlete.PercentIndoor ?? 
+      (athlete.TotalDistance > 0 ? (athlete.TotalIndoorDistance / athlete.TotalDistance) * 100 : 0);
+    
     return {
       rank: index + 1,
       name: athlete.AthleteName,
@@ -147,10 +151,10 @@ export const convertAthleteDataToTableFormat = (athletes: AthleteData[], sport: 
       distance: Math.round(totalDistanceMiles),
       outdoorDistance: Math.round(outdoorDistanceMiles),
       indoorDistance: Math.round(indoorDistanceMiles),
-      percentIndoor: athlete.PercentIndoor,
+      percentIndoor: percentIndoor,
       elevation: Math.round(athlete.TotalElevation),
-      outdoorElevation: Math.round(athlete.TotalOutdoorElevation),
-      indoorElevation: Math.round(athlete.TotalIndoorElevation),
+      outdoorElevation: Math.round(athlete.TotalOutdoorElevation || 0),
+      indoorElevation: Math.round(athlete.TotalIndoorElevation || 0),
       time: `${hours}h ${minutes}m`,
       activities: (athlete.OutdoorDistances?.length || 0) + (athlete.IndoorDistances?.length || 0),
       longestRide: Math.round(longestRideMiles),
