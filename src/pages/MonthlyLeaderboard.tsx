@@ -14,17 +14,31 @@ export default function MonthlyLeaderboard() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["monthlyLeaderboard"],
     queryFn: api.getMonthlyLeaderboard,
+    retry: 1,
+    onError: (err) => {
+      console.error("Monthly leaderboard error:", err);
+    },
   });
 
   const filteredAthletes = useMemo(() => {
-    if (!data) return [];
+    if (!data) {
+      console.log("No data received");
+      return [];
+    }
+    
+    console.log("Data received:", data.length, "athletes");
     
     // Filter by gender directly from the array
     const athletes = data.filter(athlete => 
       gender === "male" ? athlete.AthleteSex === "M" : athlete.AthleteSex === "F"
     );
     
-    return convertAthleteDataToTableFormat(athletes, sport);
+    console.log("Filtered athletes:", athletes.length);
+    
+    const formatted = convertAthleteDataToTableFormat(athletes, sport);
+    console.log("Formatted athletes:", formatted.length);
+    
+    return formatted;
   }, [data, gender, sport]);
 
   return (
@@ -61,6 +75,11 @@ export default function MonthlyLeaderboard() {
         ) : error ? (
           <div className="rounded-xl border border-destructive/50 bg-destructive/10 p-6 text-center">
             <p className="text-destructive">Failed to load leaderboard data. Please try again later.</p>
+            <p className="text-sm text-muted-foreground mt-2">Error: {error instanceof Error ? error.message : 'Unknown error'}</p>
+          </div>
+        ) : filteredAthletes.length === 0 ? (
+          <div className="rounded-xl border border-border bg-muted/50 p-6 text-center">
+            <p className="text-muted-foreground">No athletes found for the selected criteria.</p>
           </div>
         ) : (
           <LeaderboardTable data={filteredAthletes} title="This Month's Rankings" />
