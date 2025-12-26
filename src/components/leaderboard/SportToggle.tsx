@@ -10,14 +10,14 @@ interface SportToggleProps {
 
 export function SportToggle({ value, onChange }: SportToggleProps) {
   return (
-    <div className="inline-flex rounded-lg bg-card/50 p-1 border border-border/50">
+    <div className="inline-flex rounded-lg bg-slate-800 p-1 border border-slate-700">
       <button
         onClick={() => onChange("running")}
         className={cn(
           "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200",
           value === "running"
-            ? "bg-strava text-white shadow-md"
-            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+            ? "bg-primary text-white shadow-md"
+            : "text-slate-200 hover:text-white hover:bg-slate-700"
         )}
       >
         <PersonStanding className="h-4 w-4" />
@@ -28,8 +28,8 @@ export function SportToggle({ value, onChange }: SportToggleProps) {
         className={cn(
           "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200",
           value === "cycling"
-            ? "bg-strava text-white shadow-md"
-            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+            ? "bg-primary text-white shadow-md"
+            : "text-slate-200 hover:text-white hover:bg-slate-700"
         )}
       >
         <Bike className="h-4 w-4" />

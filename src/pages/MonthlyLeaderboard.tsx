@@ -11,14 +11,24 @@ export default function MonthlyLeaderboard() {
   const [gender, setGender] = useState<Gender>("male");
   const [sport, setSport] = useState<Sport>("cycling");
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["monthlyLeaderboard"],
+  // Fetch cycling or running data based on sport selection
+  const { data: cyclingData, isLoading: cyclingLoading, error: cyclingError } = useQuery({
+    queryKey: ["monthlyLeaderboard", "cycling"],
     queryFn: api.getMonthlyLeaderboard,
+    enabled: sport === "cycling",
     retry: 1,
-    onError: (err) => {
-      console.error("Monthly leaderboard error:", err);
-    },
   });
+
+  const { data: runningData, isLoading: runningLoading, error: runningError } = useQuery({
+    queryKey: ["monthlyLeaderboard", "running"],
+    queryFn: api.getMonthlyRunnerTotals,
+    enabled: sport === "running",
+    retry: 1,
+  });
+
+  const data = sport === "cycling" ? cyclingData : runningData;
+  const isLoading = sport === "cycling" ? cyclingLoading : runningLoading;
+  const error = sport === "cycling" ? cyclingError : runningError;
 
   const filteredAthletes = useMemo(() => {
     if (!data) {

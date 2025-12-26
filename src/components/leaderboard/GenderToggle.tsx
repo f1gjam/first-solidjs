@@ -9,14 +9,14 @@ interface GenderToggleProps {
 
 export function GenderToggle({ value, onChange }: GenderToggleProps) {
   return (
-    <div className="inline-flex rounded-lg bg-muted p-1 gap-1">
+    <div className="inline-flex rounded-lg bg-slate-800 p-1 gap-1 border border-slate-700">
       <button
         onClick={() => onChange("male")}
         className={cn(
           "px-4 py-2 rounded-md font-display text-sm font-semibold uppercase tracking-wide transition-all duration-200",
           value === "male"
-            ? "bg-blue-500 text-white shadow-md"
-            : "text-muted-foreground hover:text-foreground hover:bg-muted-foreground/10"
+            ? "bg-blue-600 text-white shadow-md"
+            : "text-slate-200 hover:text-white hover:bg-slate-700"
         )}
       >
         Male
@@ -26,8 +26,8 @@ export function GenderToggle({ value, onChange }: GenderToggleProps) {
         className={cn(
           "px-4 py-2 rounded-md font-display text-sm font-semibold uppercase tracking-wide transition-all duration-200",
           value === "female"
-            ? "bg-pink-500 text-white shadow-md"
-            : "text-muted-foreground hover:text-foreground hover:bg-muted-foreground/10"
+            ? "bg-pink-600 text-white shadow-md"
+            : "text-slate-200 hover:text-white hover:bg-slate-700"
         )}
       >
         Female

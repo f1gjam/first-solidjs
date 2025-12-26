@@ -11,6 +11,8 @@ export default function AllTimeLeaderboard() {
   const [gender, setGender] = useState<Gender>("male");
   const [sport, setSport] = useState<Sport>("cycling");
 
+  // Note: Running data for all-time not available from backend yet
+  // Backend only has rider_yearly_totals (cycling), no runner_yearly_totals
   const { data, isLoading, error } = useQuery({
     queryKey: ["yearlyLeaderboard"],
     queryFn: api.getYearlyLeaderboard,
