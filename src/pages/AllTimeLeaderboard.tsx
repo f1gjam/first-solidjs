@@ -19,9 +19,10 @@ export default function AllTimeLeaderboard() {
   const filteredAthletes = useMemo(() => {
     if (!data) return [];
     
-    const athletes = gender === "male" 
-      ? (data.MaleSorted || data.Male?.MaleSorted || [])
-      : (data.FemaleSorted || data.Female?.FemaleSorted || []);
+    // Filter by gender directly from the array
+    const athletes = data.filter(athlete => 
+      gender === "male" ? athlete.AthleteSex === "M" : athlete.AthleteSex === "F"
+    );
     
     return convertAthleteDataToTableFormat(athletes, sport);
   }, [data, gender, sport]);

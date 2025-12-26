@@ -42,37 +42,22 @@ export interface AthleteData {
   HighestIndoorElevation: number;
 }
 
-export interface LeaderboardResponse {
-  Male?: {
-    MaleSorted?: AthleteData[];
-  };
-  Female?: {
-    FemaleSorted?: AthleteData[];
-  };
-  MaleSorted?: AthleteData[];
-  FemaleSorted?: AthleteData[];
-}
-
 export const api = {
-  getWeeklyLeaderboard: async (): Promise<LeaderboardResponse> => {
-    const response = await apiClient.get('/api/weekly');
+  // Get yearly/all-time leaderboard data (this is the main endpoint)
+  getYearlyLeaderboard: async (): Promise<AthleteData[]> => {
+    const response = await apiClient.get('/dataapi/rider_yearly_totals');
     return response.data;
   },
 
-  getMonthlyLeaderboard: async (): Promise<LeaderboardResponse> => {
-    const response = await apiClient.get('/api/monthly');
+  // Weekly and monthly use the same yearly data for now
+  // TODO: Update when backend has separate weekly/monthly endpoints
+  getWeeklyLeaderboard: async (): Promise<AthleteData[]> => {
+    const response = await apiClient.get('/dataapi/rider_yearly_totals');
     return response.data;
   },
 
-  getYearlyLeaderboard: async (): Promise<LeaderboardResponse> => {
-    const response = await apiClient.get('/api/yearly');
-    return response.data;
-  },
-
-  getCustomLeaderboard: async (startDate: string, endDate: string): Promise<LeaderboardResponse> => {
-    const response = await apiClient.get('/api/custom', {
-      params: { startDate, endDate },
-    });
+  getMonthlyLeaderboard: async (): Promise<AthleteData[]> => {
+    const response = await apiClient.get('/dataapi/rider_yearly_totals');
     return response.data;
   },
 };
