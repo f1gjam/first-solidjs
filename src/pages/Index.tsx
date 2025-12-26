@@ -1,62 +1,63 @@
 import { Link } from "react-router-dom";
+import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { Trophy, Calendar, Users, TrendingUp, Activity, Bike, Medal } from "lucide-react";
+import { Trophy, Calendar, Users, TrendingUp, Activity, Bike } from "lucide-react";
 
 const stats = [
   { label: "Active Athletes", value: "2,456", icon: Users },
   { label: "Total Distance", value: "1.2M km", icon: TrendingUp },
   { label: "Activities Logged", value: "48,392", icon: Activity },
-  { label: "Weekly Challenges", value: "156", icon: Trophy },
+  { label: "Clubs Tracked", value: "156", icon: Bike },
 ];
 
 const leaderboards = [
   {
     title: "Men's Cycling",
-    description: "Weekly cycling leaderboard",
+    description: "Top male cyclists",
     href: "/mens_leaderboard",
-    icon: Bike,
+    icon: Trophy,
     color: "from-blue-500 to-cyan-500",
   },
   {
     title: "Women's Cycling",
-    description: "Weekly cycling leaderboard",
+    description: "Top female cyclists",
     href: "/womens_leaderboard",
-    icon: Bike,
-    color: "from-pink-500 to-rose-500",
+    icon: Trophy,
+    color: "from-pink-500 to-purple-500",
   },
   {
     title: "Men's Running",
-    description: "Weekly running leaderboard",
+    description: "Top male runners",
     href: "/mens_running_leaderboard",
-    icon: TrendingUp,
+    icon: Activity,
     color: "from-green-500 to-emerald-500",
   },
   {
     title: "Women's Running",
-    description: "Weekly running leaderboard",
+    description: "Top female runners",
     href: "/womens_running_leaderboard",
-    icon: TrendingUp,
-    color: "from-purple-500 to-violet-500",
+    icon: Activity,
+    color: "from-orange-500 to-amber-500",
   },
   {
     title: "Monthly Leaders",
-    description: "Top performers this month",
+    description: "This month's champions",
     href: "/monthly_leaders",
     icon: Calendar,
     color: "from-primary to-orange-400",
   },
   {
     title: "Yearly Leaders",
-    description: "Champions of the year",
+    description: "Best of the year",
     href: "/yearly_leaders",
-    icon: Medal,
-    color: "from-yellow-500 to-amber-500",
+    icon: Trophy,
+    color: "from-purple-500 to-pink-500",
   },
 ];
 
 export default function Index() {
   return (
-    <>
+    <Layout>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-strava-dark to-strava-darker py-16 md:py-24">
         {/* Background Pattern */}
@@ -70,7 +71,7 @@ export default function Index() {
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary mb-6 animate-fade-in">
               <Activity className="h-4 w-4" />
-              <span className="text-sm font-medium">UnixCraft Community</span>
+              <span className="text-sm font-medium">Beta Site</span>
             </div>
             
             <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight text-white mb-6 animate-fade-in" style={{ animationDelay: "100ms" }}>
@@ -127,7 +128,7 @@ export default function Index() {
               Leaderboards
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Choose a leaderboard to see how athletes are performing across different categories.
+              Choose a leaderboard to see how athletes are performing across different time periods.
             </p>
           </div>
 
@@ -170,11 +171,11 @@ export default function Index() {
               className="h-16 opacity-60"
             />
             <p className="text-sm text-muted-foreground text-center max-w-md">
-              All activity data is synced from Strava. Join the UnixCraft community to start tracking.
+              All activity data is synced from Strava. Connect your account to start tracking.
             </p>
           </div>
         </div>
       </section>
-    </>
+    </Layout>
   );
 }
