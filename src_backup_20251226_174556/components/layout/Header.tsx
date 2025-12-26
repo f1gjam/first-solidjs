@@ -1,19 +1,15 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Home, Users, Trophy, Calendar, TrendingUp, FileText, Bike, Activity as ActivityIcon } from "lucide-react";
+import { Menu, X, Activity, Trophy, Users, Calendar, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { label: "Home", href: "/", icon: Home },
-  { label: "Men's Cycling", href: "/mens_leaderboard", icon: Bike },
-  { label: "Women's Cycling", href: "/womens_leaderboard", icon: Bike },
-  { label: "Men's Running", href: "/mens_running_leaderboard", icon: TrendingUp },
-  { label: "Women's Running", href: "/womens_running_leaderboard", icon: TrendingUp },
-  { label: "Monthly Leaders", href: "/monthly_leaders", icon: Calendar },
-  { label: "Yearly Leaders", href: "/yearly_leaders", icon: Trophy },
-  { label: "Single Activity", href: "/single_activity", icon: ActivityIcon },
-  { label: "Documentation", href: "/documentation", icon: FileText },
+  { label: "Weekly", href: "/weekly", icon: Calendar },
+  { label: "Monthly", href: "/monthly", icon: Trophy },
+  { label: "All Time", href: "/all-time", icon: Trophy },
+  { label: "Clubs", href: "/clubs", icon: Users },
 ];
 
 export function Header() {
@@ -25,11 +21,9 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group">
-          <img 
-            src="/Unixcraft logo2.png" 
-            alt="UnixCraft Logo" 
-            className="h-10 w-10 rounded-lg transition-transform group-hover:scale-105"
-          />
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-transform group-hover:scale-105">
+            <Activity className="h-6 w-6" />
+          </div>
           <div className="flex flex-col">
             <span className="font-display text-lg font-bold uppercase tracking-wide leading-none">
               Strava Club
