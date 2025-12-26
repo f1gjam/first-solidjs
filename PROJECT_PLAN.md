@@ -466,9 +466,14 @@ Modernize the React frontend to match the original Go backend functionality, imp
 - Fixed Docker build issues (nginx permissions, missing dependencies)
 - Fixed CSS loading issues
 - All code committed and pushed to repositories
-- **Phase 11: Added Current Month Leaders page**
-  - Created new page showing top performers for current month
-  - Displays distance leaders, elevation leaders, and single activity leaders
+- **Phase 11: Added Monthly/Yearly Leaders page**
+  - Created new page showing top performers for current month and year
+  - Displays Monthly Distance Leaders table
+  - Displays Yearly Distance Leaders table
   - Covers all categories: Men's/Women's Cycling & Running
   - Modern card-based responsive layout
   - Added to navigation menu (desktop and mobile)
+  - Fixed package-lock.json missing issue
+  - Successfully deployed to production at https://www2.unixcraft.dev/
+  - All navigation links working correctly
+  - CSS and styling loading properly
