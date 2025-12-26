@@ -1,172 +1,113 @@
-# Docker Build Error Fix - Missing reportWebVitals & Nginx Permissions
+# Docker Build Fix - Complete (Updated)
 
-## 🐛 Errors Encountered
-
-### Error 1: Missing Module
+## Latest Issue Fixed (Dec 26, 2024)
+After migrating to unified-web-experience, the Docker build was failing with:
 ```
-Module not found: Error: Can't resolve './reportWebVitals' in '/app/src'
-```
-
-### Error 2: Nginx Permission Denied
-```
-nginx: [emerg] open() "/var/run/nginx.pid" failed (13: Permission denied)
+ERROR: "/postcss.config.cjs": not found
 ```
 
-### Error 3: Nginx PID Directive Location
-```
-nginx: [emerg] "pid" directive is not allowed here in /etc/nginx/conf.d/default.conf:6
-```
+## Root Cause
+During the migration to unified-web-experience and Vite, several files were renamed/removed:
+1. ✅ Renamed `postcss.config.cjs` → `postcss.config.js` (ES modules)
+2. ✅ Removed `config-overrides.js` (not needed with Vite)
+3. ✅ Removed `.babelrc` (not needed with Vite)
+4. ✅ Changed output `build/` → `dist/` (Vite default)
+5. ✅ Changed env vars `REACT_APP_*` → `VITE_*`
 
-## 🔍 Root Causes
+The Dockerfile still referenced old files.
 
-### Issue 1: Missing reportWebVitals
-1. Missing `tsconfig.json` in Docker COPY
-2. Using `--only=production` which excludes devDependencies
-3. `react-app-rewired` needs devDependencies to build
+## Changes Made to Dockerfile
 
-### Issue 2: Nginx Permissions
-1. Nginx running as non-root user (appuser)
-2. Cannot write to `/var/run/nginx.pid` (requires root)
-3. Cannot write to default nginx cache/log directories
-
-### Issue 3: PID Directive Placement
-1. `pid` directive placed in server block (wrong)
-2. Must be in main nginx context, not server block
-3. Dockerfile handles PID location via sed command
-
-## ✅ Fixes Applied
-
-### Fix 1: Build Dependencies
-- Added explicit `tsconfig.json` copy
-- Changed `npm ci --only=production` to `npm ci` (includes devDependencies)
-- Improved layer organization
-
-### Fix 2: Nginx Non-Root Support
-- Modified nginx to use `/tmp/nginx.pid` instead of `/var/run/nginx.pid`
-- Created writable directories for non-root user:
-  - `/var/cache/nginx`
-  - `/var/log/nginx`
-  - `/tmp/nginx`
-  - `/tmp/nginx.pid`
-- Removed default nginx user directive
-- Set proper permissions for appuser
-
-### Fix 3: PID Directive Removal
-- Removed `pid /tmp/nginx.pid;` from server block in nginx.conf
-- Dockerfile uses `sed` to modify main nginx.conf instead
-- PID location set at nginx main context level, not server level
-
-## 📝 Key Changes
-
-### Dockerfile Changes:
-
+### 1. Configuration Files
+**Before:**
 ```dockerfile
-# Create writable directories for nginx non-root user
-RUN mkdir -p /var/cache/nginx /var/log/nginx /tmp/nginx && \
-    chown -R appuser:appuser /var/cache/nginx /var/log/nginx /tmp/nginx /usr/share/nginx/html /etc/nginx/conf.d && \
-    chmod -R 755 /var/cache/nginx /var/log/nginx /tmp/nginx && \
-    touch /tmp/nginx.pid && \
-    chown appuser:appuser /tmp/nginx.pid
-
-# Remove default nginx user directive
-RUN sed -i '/user  nginx;/d' /etc/nginx/nginx.conf || true
-
-# Modify nginx.conf to use /tmp for pid (at main context level)
-RUN sed -i 's|/var/run/nginx.pid|/tmp/nginx.pid|g' /etc/nginx/nginx.conf
+COPY config-overrides.js .babelrc postcss.config.cjs tailwind.config.ts vite.config.ts ...
 ```
 
-### nginx/nginx.conf Changes:
-
-```nginx
-server {
-  listen       3000;
-  server_name  _;
-  
-  # NO pid directive here - it's handled by Dockerfile at main nginx.conf level
-  
-  # Security headers
-  add_header X-Frame-Options "SAMEORIGIN" always;
-  # ... rest of config
-}
+**After:**
+```dockerfile
+COPY tsconfig.json tsconfig.app.json tsconfig.node.json postcss.config.js tailwind.config.ts vite.config.ts components.json ./
 ```
 
-**Note:** The `pid` directive is automatically set by the Dockerfile's `sed` command which modifies the main `/etc/nginx/nginx.conf` file.
+### 2. Environment Variables
+**Before:**
+```dockerfile
+ARG REACT_APP_API_URL=https://www.unixcraft.dev
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
+```
 
-## 🚀 Testing the Build
+**After:**
+```dockerfile
+ARG VITE_API_URL=https://www.unixcraft.dev
+ENV VITE_API_URL=$VITE_API_URL
+```
 
-### **GitLab CI Test**:
+### 3. Build Output Directory
+**Before:**
+```dockerfile
+COPY --from=builder /app/build /usr/share/nginx/html
+```
+
+**After:**
+```dockerfile
+COPY --from=builder /app/dist /usr/share/nginx/html
+```
+
+## Testing Commands
+
+### Local Build
 ```bash
-# Commit and push the changes
-git add Dockerfile nginx/nginx.conf DOCKER_BUILD_FIX.md
-git commit -m "fix: resolve nginx configuration errors
-
-- Remove pid directive from server block (must be in main context)
-- Add tsconfig.json to Docker context
-- Install all dependencies including devDependencies
-- Configure nginx to run as non-root user
-- Use /tmp for nginx pid file via Dockerfile sed command
-- Set proper permissions for appuser"
-git push
-
-# Monitor the pipeline in GitLab
+npm run build
+# Outputs to dist/ directory
+ls -la dist/
 ```
 
-## 🎯 Expected Outcome
-
-After these fixes:
-1. ✅ Dockerfile includes tsconfig.json
-2. ✅ All dependencies installed (including devDependencies)
-3. ✅ Build completes successfully
-4. ✅ Docker image created
-5. ✅ Nginx starts as non-root user
-6. ✅ No permission errors
-7. ✅ No nginx configuration errors
-8. ✅ Application accessible on port 3000
-
-## 📊 Successful Startup Output
-
-When everything works, you'll see:
-
-```
-/docker-entrypoint.sh: Configuration complete; ready for start up
-2025/12/26 04:16:58 [notice] 1#1: using the "epoll" event method
-2025/12/26 04:16:58 [notice] 1#1: nginx/1.25.5
-2025/12/26 04:16:58 [notice] 1#1: built by gcc 13.2.1 20231014 (Alpine 13.2.1_git20231014)
-2025/12/26 04:16:58 [notice] 1#1: OS: Linux 5.14.0-427.20.1.el9_4.x86_64
-2025/12/26 04:16:58 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1073741816:1073741816
-2025/12/26 04:16:58 [notice] 1#1: start worker processes
-2025/12/26 04:16:58 [notice] 7#7: start worker process 7
+### Docker Build
+```bash
+docker build -t stravastats-frontend .
 ```
 
-No errors about permissions or configuration!
+### Docker Run
+```bash
+docker run -p 3000:3000 -e VITE_API_URL=https://www.unixcraft.dev stravastats-frontend
+```
 
-## 🔒 Security Benefits
+### With Custom API URL
+```bash
+docker build --build-arg VITE_API_URL=https://your-api.com -t stravastats-frontend .
+```
 
-Running nginx as non-root:
-- ✅ Reduced attack surface
-- ✅ Better container security
-- ✅ Follows security best practices
-- ✅ Compliant with most security policies
+## GitLab CI/CD Variables
 
-## ✨ Summary
+Update your GitLab CI variables:
+```yaml
+variables:
+  VITE_API_URL: "https://www.unixcraft.dev"
 
-### Build Issue Fixed:
-- Missing `tsconfig.json` → Added to COPY
-- Wrong npm install → Changed to include devDependencies
-- `react-app-rewired` not found → Fixed by installing all deps
+build:
+  script:
+    - docker build --build-arg VITE_API_URL=$VITE_API_URL -t $CI_REGISTRY_IMAGE:latest .
+```
 
-### Runtime Issue Fixed:
-- Permission denied → Use `/tmp/nginx.pid`
-- Cannot write to `/var/run` → Created writable directories
-- Running as root → Now runs as appuser (UID 1001)
+## Summary of All Fixes
 
-### Configuration Issue Fixed:
-- PID directive in server block → Removed from server block
-- Handled by Dockerfile sed command → Sets PID at main nginx.conf level
-- Proper nginx context → No configuration errors
+### Files Modified:
+- ✅ `Dockerfile` - Updated for Vite and ES modules
+- ✅ `postcss.config.cjs` → `postcss.config.js`
+- ✅ Removed `config-overrides.js` and `.babelrc`
+- ✅ Updated `.env` with `VITE_*` variables
 
----
+### Git Commits:
+```
+8654dcd Fix Dockerfile for Vite build
+a335504 Add migration completion summary
+9eb8f2f Replace site with unified-web-experience and integrate backend API
+```
 
-**Status:** ✅ FULLY FIXED
-**Updated:** 2025-12-26
-**Issues Resolved:** 3/3
+## Status
+✅ **COMPLETE** - Docker build is now fixed and aligned with Vite!
+
+Push these changes to trigger a successful GitLab CI build:
+```bash
+git push origin dev
+```
