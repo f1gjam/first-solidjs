@@ -12,6 +12,12 @@ export function Documentation() {
 
             <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">How to Register</h2>
+                
+                <div className="mb-6">
+                    <img src="/images/docs/registration-step1.svg" alt="Registration Step 1" className="w-full rounded-lg shadow-lg border border-gray-200" />
+                    <p className="text-sm text-gray-600 mt-2 text-center italic">Step 1: Click "Connect with STRAVA" button</p>
+                </div>
+                
                 <div className="bg-gray-100 p-6 rounded-lg mb-4">
                     <ol className="list-decimal list-inside space-y-3">
                         <li>Click on the "Register" link in the navigation menu</li>
@@ -29,6 +35,11 @@ export function Documentation() {
                         <li>Wait 30 seconds for the registration to complete (do NOT refresh or click back)</li>
                         <li>You will be redirected to a success page once registration is complete</li>
                     </ol>
+                </div>
+                
+                <div className="mb-6">
+                    <img src="/images/docs/strava-permissions.svg" alt="Strava Authorization Page" className="w-full rounded-lg shadow-lg border border-gray-200" />
+                    <p className="text-sm text-gray-600 mt-2 text-center italic">Step 2: Grant all permissions on Strava's authorization page</p>
                 </div>
                 <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
                     <p className="text-yellow-700">
@@ -78,6 +89,11 @@ export function Documentation() {
             <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">Understanding the Leaderboards</h2>
                 
+                <div className="mb-6">
+                    <img src="/images/docs/leaderboard-example.svg" alt="Leaderboard Example" className="w-full rounded-lg shadow-lg border border-gray-200" />
+                    <p className="text-sm text-gray-600 mt-2 text-center italic">Example leaderboard with sorting, filtering, and pagination features</p>
+                </div>
+                
                 <h3 className="text-xl font-semibold mb-3 mt-6">Cycling Leaderboards</h3>
                 <div className="mb-4">
                     <h4 className="font-semibold mb-2">Monthly Leaderboard</h4>
@@ -108,6 +124,12 @@ export function Documentation() {
 
             <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">Using the Date Picker</h2>
+                
+                <div className="mb-6">
+                    <img src="/images/docs/date-picker.svg" alt="Date Picker" className="w-full max-w-2xl mx-auto rounded-lg shadow-lg border border-gray-200" />
+                    <p className="text-sm text-gray-600 mt-2 text-center italic">Use the date picker to navigate between months and years</p>
+                </div>
+                
                 <div className="bg-gray-100 p-6 rounded-lg">
                     <p className="mb-2">
                         Use the date picker at the top of the page to select different months or years:

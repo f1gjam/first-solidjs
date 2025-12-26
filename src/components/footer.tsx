@@ -1,4 +1,5 @@
 import 'flowbite';
+import { Link } from 'react-router-dom';
 
 export function Footer() {
     return (
@@ -11,10 +12,10 @@ export function Footer() {
                     alt="Strava"></img>
                 <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-300 sm:mt-0">
                     <li>
-                        <a href="#" className="hover:underline me-4 md:me-6">About</a>
+                        <Link to="/about" className="hover:underline me-4 md:me-6">About</Link>
                     </li>
                     <li>
-                        <a href="#" className="hover:underline">Contact</a>
+                        <a href="mailto:support@unixcraft.dev" className="hover:underline">Contact</a>
                     </li>
                 </ul>
             </div>

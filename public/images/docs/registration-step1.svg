@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#f9fafb"/>
+  
+  <!-- Browser chrome -->
+  <rect width="800" height="40" fill="#e5e7eb"/>
+  <circle cx="20" cy="20" r="6" fill="#ef4444"/>
+  <circle cx="40" cy="20" r="6" fill="#fbbf24"/>
+  <circle cx="60" cy="20" r="6" fill="#10b981"/>
+  
+  <!-- Header -->
+  <rect y="40" width="800" height="80" fill="#1f2937"/>
+  <text x="400" y="90" font-family="Arial" font-size="24" fill="#ffffff" text-anchor="middle" font-weight="bold">
+    Strava Club Stats - Register
+  </text>
+  
+  <!-- Main content -->
+  <rect y="120" width="800" height="380" fill="#ffffff"/>
+  
+  <!-- Card -->
+  <rect x="250" y="180" width="300" height="250" rx="8" fill="#f3f4f6" stroke="#d1d5db" stroke-width="2"/>
+  
+  <!-- Title -->
+  <text x="400" y="220" font-family="Arial" font-size="20" fill="#111827" text-anchor="middle" font-weight="bold">
+    Register with Strava
+  </text>
+  
+  <!-- Description -->
+  <text x="400" y="260" font-family="Arial" font-size="14" fill="#6b7280" text-anchor="middle">
+    Connect your Strava account to join
+  </text>
+  <text x="400" y="280" font-family="Arial" font-size="14" fill="#6b7280" text-anchor="middle">
+    the leaderboard
+  </text>
+  
+  <!-- Connect Button -->
+  <rect x="300" y="310" width="200" height="50" rx="6" fill="#fc4c02"/>
+  <text x="400" y="342" font-family="Arial" font-size="16" fill="#ffffff" text-anchor="middle" font-weight="bold">
+    Connect with STRAVA
+  </text>
+  
+  <!-- Arrow pointing to button -->
+  <path d="M 150 335 L 280 335" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="150" y="325" font-family="Arial" font-size="16" fill="#f59e0b" font-weight="bold">
+    1. Click here
+  </text>
+  
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#f59e0b"/>
+    </marker>
+  </defs>
+</svg>
