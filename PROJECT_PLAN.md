@@ -4,7 +4,14 @@
 Modernize the React frontend to match the original Go backend functionality, improve mobile responsiveness, enhance security, and add comprehensive documentation.
 
 **Start Date:** 2025-12-26  
-**Current Status:** ✅ ALL PHASES COMPLETE - Project Successfully Delivered
+**Current Status:** ✅ ALL PHASES COMPLETE + ENHANCEMENTS ADDED
+
+**Latest Update:** 2025-12-26
+- ✅ Added separate running monthly/yearly pages
+- ✅ Updated menu structure with categorized sections (Cycling/Running)
+- ✅ Added UnixCraft logo to header
+- ✅ Created 4 new running leaderboard pages
+- ✅ Improved navigation structure
 
 ---
 
