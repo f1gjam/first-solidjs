@@ -8,6 +8,7 @@ import { signal } from '@preact/signals-react'
 import { format } from "date-fns";
 
 import type { StravaStatsDataType } from '../models/myTypes'
+import { TopAthleteTable } from './TopAthleteTable';
 
 const emptyData: StravaStatsDataType = ({} as StravaStatsDataType);
 export const fetchedData = signal<StravaStatsDataType>(emptyData);
@@ -33,73 +34,149 @@ fetchData("");
 export function FemaleYearlyTable() {
     const table = useTable();
 
-    return (
-        <div className="shadow-lg rounded-lg overflow-hidden mx-4 my-4 sm:mx-4 sm:my-4" >
-            <h2 className="text-2xl font-bold p-4">Womens Cycling Yearly Leaderboard</h2>
+    // Get top 10 for each category
+    const getTop10 = (sortKey: string) => {
+        if (!fetchedData.value?.FemaleSorted) return [];
+        return [...fetchedData.value.FemaleSorted]
+            .sort((a: any, b: any) => (b[sortKey] || 0) - (a[sortKey] || 0))
+            .slice(0, 10)
+            .map((athlete: any) => ({
+                AthleteName: athlete.AthleteName,
+                Value: athlete[sortKey]
+            }));
+    };
 
-            <Table
-                data={fetchedData.value?.FemaleSorted}
-                filteringMode={FilteringMode.FilterRow}
-                table={table}
-                columns={
-                    [
-                        {
-                            key: 'AthleteName', title: 'Athlete Name', dataType: DataType.String, isSortable: true, style: { width: 240, height: 20, },
+    return (
+        <>
+            <div className="shadow-lg rounded-lg overflow-hidden mx-4 my-4 sm:mx-4 sm:my-4" >
+                <h2 className="text-2xl font-bold p-4">Womens Cycling Yearly Leaderboard</h2>
+
+                <Table
+                    data={fetchedData.value?.FemaleSorted}
+                    filteringMode={FilteringMode.FilterRow}
+                    table={table}
+                    columns={
+                        [
+                            {
+                                key: 'AthleteName', title: 'Athlete Name', dataType: DataType.String, isSortable: true, style: { width: 240, height: 20, },
+                            },
+                            {
+                                key: 'TotalDistance', title: 'Total Distance', dataType: DataType.Number, isSortable: true,
+                                sortDirection: SortDirection.Descend, isFilterable: false
+                            },
+                            {
+                                key: 'TotalOutdoorDistance', title: 'Outdoor Distance', dataType: DataType.Number, isSortable: true, isFilterable: false
+                            },
+                            { key: 'TotalIndoorDistance', title: 'Indoor Distance', dataType: DataType.Number, isSortable: true, isFilterable: false },
+                            { key: 'PercentIndoor', title: 'Percentage Indoor', dataType: DataType.Number, isSortable: true, isFilterable: false },
+                            { key: 'TotalOutdoorElevation', title: 'Outdoor Elevation', dataType: DataType.Number, isSortable: true, isFilterable: false },
+                            { key: 'TotalIndoorElevation', title: 'Indoor Elevation', dataType: DataType.Number, isSortable: true, isFilterable: false },
+                            { key: 'TotalElevation', title: 'Total Elevation', dataType: DataType.Number, isSortable: true, isFilterable: false },
+                        ]}
+                    paging={{
+                        enabled: true,
+                        pageIndex: 0,
+                        pageSize: 10,
+                        pageSizes: [5, 10, 15],
+                        position: PagingPosition.Bottom
+                    }}
+                    editingMode={EditingMode.None}
+                    rowKeyField={'AthleteID'}
+                    sortingMode={SortingMode.Single}
+                    childComponents={{
+                        headCell: {
+                            elementAttributes: (props) => {
+                                if (props.column.key === 'column0') {
+                                    return {
+                                        style: {
+                                            ...props.column.style,
+                                            position: 'sticky',
+                                            left: 0,
+                                            zIndex: 10,
+                                        }
+                                    }
+                                }
+                            }
                         },
-                        {
-                            key: 'TotalDistance', title: 'Total Distance', dataType: DataType.Number, isSortable: true,
-                            sortDirection: SortDirection.Descend, isFilterable: false
-                        },
-                        {
-                            key: 'TotalOutdoorDistance', title: 'Outdoor Distance', dataType: DataType.Number, isSortable: true, isFilterable: false
-                        },
-                        { key: 'TotalIndoorDistance', title: 'Indoor Distance', dataType: DataType.Number, isSortable: true, isFilterable: false },
-                        { key: 'PercentIndoor', title: 'Percentage Indoor', dataType: DataType.Number, isSortable: true, isFilterable: false },
-                        { key: 'TotalOutdoorElevation', title: 'Outdoor Elevation', dataType: DataType.Number, isSortable: true, isFilterable: false },
-                        { key: 'TotalIndoorElevation', title: 'Indoor Elevation', dataType: DataType.Number, isSortable: true, isFilterable: false },
-                        { key: 'TotalElevation', title: 'Total Elevation', dataType: DataType.Number, isSortable: true, isFilterable: false },
-                    ]}
-                paging={{
-                    enabled: true,
-                    pageIndex: 0,
-                    pageSize: 10,
-                    pageSizes: [5, 10, 15],
-                    position: PagingPosition.Bottom
-                }}
-                editingMode={EditingMode.None}
-                rowKeyField={'AthleteID'}
-                sortingMode={SortingMode.Single}
-                childComponents={{
-                    headCell: {
-                        elementAttributes: (props) => {
-                            if (props.column.key === 'column0') {
-                                return {
-                                    style: {
-                                        ...props.column.style,
-                                        position: 'sticky',
-                                        left: 0,
-                                        zIndex: 10,
+                        cell: {
+                            elementAttributes: (props) => {
+                                if (props.column.key === 'column0') {
+                                    return {
+                                        style: {
+                                            ...props.column.style,
+                                            position: 'sticky',
+                                            left: 0,
+                                            backgroundColor: '#eee',
+                                        }
                                     }
                                 }
                             }
                         }
-                    },
-                    cell: {
-                        elementAttributes: (props) => {
-                            if (props.column.key === 'column0') {
-                                return {
-                                    style: {
-                                        ...props.column.style,
-                                        position: 'sticky',
-                                        left: 0,
-                                        backgroundColor: '#eee',
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }}
-            />
-        </div>
+                    }}
+                />
+            </div>
+
+            {/* Top 10 Tables Section */}
+            <div className="mx-4 my-8">
+                <h2 className="text-2xl font-bold mb-6 text-gray-800">Top 10 Yearly Rankings</h2>
+                
+                {/* Distance Rankings */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <TopAthleteTable 
+                        title="Top Total Distance" 
+                        data={getTop10('TotalDistance')} 
+                        valueLabel="Distance (km)" 
+                    />
+                    <TopAthleteTable 
+                        title="Top Outdoor Distance" 
+                        data={getTop10('TotalOutdoorDistance')} 
+                        valueLabel="Distance (km)" 
+                    />
+                    <TopAthleteTable 
+                        title="Top Indoor Distance" 
+                        data={getTop10('TotalIndoorDistance')} 
+                        valueLabel="Distance (km)" 
+                    />
+                </div>
+
+                {/* Elevation Rankings */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <TopAthleteTable 
+                        title="Top Total Elevation" 
+                        data={getTop10('TotalElevation')} 
+                        valueLabel="Elevation (m)" 
+                    />
+                    <TopAthleteTable 
+                        title="Top Outdoor Elevation" 
+                        data={getTop10('TotalOutdoorElevation')} 
+                        valueLabel="Elevation (m)" 
+                    />
+                    <TopAthleteTable 
+                        title="Top Indoor Elevation" 
+                        data={getTop10('TotalIndoorElevation')} 
+                        valueLabel="Elevation (m)" 
+                    />
+                </div>
+
+                {/* Single Ride Rankings */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <TopAthleteTable 
+                        title="Longest Outdoor Ride" 
+                        data={getTop10('LongestSingleOutdoorRide')} 
+                        valueLabel="Distance (km)" 
+                    />
+                    <TopAthleteTable 
+                        title="Longest Indoor Ride" 
+                        data={getTop10('LongestSingleIndoorRide')} 
+                        valueLabel="Distance (km)" 
+                    />
+                    <TopAthleteTable 
+                        title="Most Outdoor Elevation in Single Ride" 
+                        data={getTop10('LongestSingleOutdoorElevation')} 
+                        valueLabel="Elevation (m)" 
+                    />
+                </div>
+            </div>
+        </>
     )
 }
