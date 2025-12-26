@@ -55,14 +55,21 @@ COPY --from=builder --chown=appuser:appuser /app/build /usr/share/nginx/html
 
 # Copy nginx configuration
 COPY --from=builder /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-RUN chown -R appuser:appuser /usr/share/nginx/html && \
-    chown appuser:appuser /etc/nginx/conf.d/default.conf
 
-# Create nginx cache and pid directories with correct permissions
-RUN mkdir -p /var/cache/nginx /var/run && \
-    chown -R appuser:appuser /var/cache/nginx /var/run
+# Create writable directories for nginx non-root user
+RUN mkdir -p /var/cache/nginx /var/log/nginx /tmp/nginx && \
+    chown -R appuser:appuser /var/cache/nginx /var/log/nginx /tmp/nginx /usr/share/nginx/html /etc/nginx/conf.d && \
+    chmod -R 755 /var/cache/nginx /var/log/nginx /tmp/nginx && \
+    touch /tmp/nginx.pid && \
+    chown appuser:appuser /tmp/nginx.pid
 
-# Remove unnecessary files
+# Remove default nginx user directive (we'll run as appuser)
+RUN sed -i '/user  nginx;/d' /etc/nginx/nginx.conf || true
+
+# Modify nginx.conf to use /tmp for pid and use lower port
+RUN sed -i 's|/var/run/nginx.pid|/tmp/nginx.pid|g' /etc/nginx/nginx.conf
+
+# Remove source maps
 RUN rm -rf /usr/share/nginx/html/*.map
 
 # Health check
@@ -75,5 +82,5 @@ USER appuser
 # Expose port
 EXPOSE 3000
 
-# Start nginx
+# Start nginx in foreground
 CMD ["nginx", "-g", "daemon off;"]
