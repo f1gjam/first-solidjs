@@ -5,23 +5,53 @@ import { LeaderboardTable } from "@/components/leaderboard/LeaderboardTable";
 import { GenderToggle, Gender } from "@/components/leaderboard/GenderToggle";
 import { SportToggle, Sport } from "@/components/leaderboard/SportToggle";
 import { api, convertAthleteDataToTableFormat } from "@/services/api";
-import { Trophy, Loader2 } from "lucide-react";
+import { Trophy, Loader2, Calendar } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+// Generate month options for the last 12 months
+const generateMonthOptions = () => {
+  const options = [];
+  const now = new Date();
+  for (let i = 0; i < 12; i++) {
+    const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const monthName = date.toLocaleString('en-US', { month: 'long' });
+    const year = date.getFullYear();
+    options.push({
+      value: `${monthName}-${year}`,
+      label: `${monthName} ${year}`
+    });
+  }
+  return options;
+};
 
 export default function MonthlyLeaderboard() {
   const [gender, setGender] = useState<Gender>("male");
   const [sport, setSport] = useState<Sport>("cycling");
+  const [selectedMonth, setSelectedMonth] = useState(() => {
+    const now = new Date();
+    const month = now.toLocaleString('en-US', { month: 'long' });
+    return `${month}-${now.getFullYear()}`;
+  });
+
+  const monthOptions = useMemo(() => generateMonthOptions(), []);
 
   // Fetch cycling or running data based on sport selection
   const { data: cyclingData, isLoading: cyclingLoading, error: cyclingError } = useQuery({
-    queryKey: ["monthlyLeaderboard", "cycling"],
-    queryFn: api.getMonthlyLeaderboard,
+    queryKey: ["monthlyLeaderboard", "cycling", selectedMonth],
+    queryFn: () => api.getMonthlyRiderTotals(selectedMonth),
     enabled: sport === "cycling",
     retry: 1,
   });
 
   const { data: runningData, isLoading: runningLoading, error: runningError } = useQuery({
-    queryKey: ["monthlyLeaderboard", "running"],
-    queryFn: api.getMonthlyRunnerTotals,
+    queryKey: ["monthlyLeaderboard", "running", selectedMonth],
+    queryFn: () => api.getMonthlyRunnerTotals(selectedMonth),
     enabled: sport === "running",
     retry: 1,
   });
@@ -71,7 +101,22 @@ export default function MonthlyLeaderboard() {
               </div>
             </div>
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 items-center">
+            <div className="flex items-center gap-2">
+              <Calendar className="h-4 w-4 text-muted-foreground" />
+              <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+                <SelectTrigger className="w-[180px] bg-slate-800 border-slate-700">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {monthOptions.map(option => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
             <SportToggle value={sport} onChange={setSport} />
             <GenderToggle value={gender} onChange={setGender} />
           </div>

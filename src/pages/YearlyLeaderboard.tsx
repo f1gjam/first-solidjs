@@ -7,7 +7,7 @@ import { SportToggle, Sport } from "@/components/leaderboard/SportToggle";
 import { api, convertAthleteDataToTableFormat } from "@/services/api";
 import { Trophy, Loader2 } from "lucide-react";
 
-export default function AllTimeLeaderboard() {
+export default function YearlyLeaderboard() {
   const [gender, setGender] = useState<Gender>("male");
   const [sport, setSport] = useState<Sport>("cycling");
 
@@ -41,10 +41,10 @@ export default function AllTimeLeaderboard() {
               </div>
               <div>
                 <h1 className="font-display text-3xl md:text-4xl font-bold uppercase">
-                  All Time Leaderboard
+                  Yearly Leaderboard
                 </h1>
                 <p className="text-muted-foreground">
-                  Legends of the club • Lifetime achievements
+                  Top performers this year • Updated daily
                 </p>
               </div>
             </div>
@@ -65,7 +65,7 @@ export default function AllTimeLeaderboard() {
             <p className="text-destructive">Failed to load leaderboard data. Please try again later.</p>
           </div>
         ) : (
-          <LeaderboardTable data={filteredAthletes} title="All Time Rankings" />
+          <LeaderboardTable data={filteredAthletes} title="This Year's Rankings" />
         )}
       </div>
     </Layout>

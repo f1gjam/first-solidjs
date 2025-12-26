@@ -5,7 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import MonthlyLeaderboard from "./pages/MonthlyLeaderboard";
-import AllTimeLeaderboard from "./pages/AllTimeLeaderboard";
+import YearlyLeaderboard from "./pages/YearlyLeaderboard";
+import TopMonthly from "./pages/TopMonthly";
+import TopYearly from "./pages/TopYearly";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -19,7 +21,9 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/monthly" element={<MonthlyLeaderboard />} />
-          <Route path="/all-time" element={<AllTimeLeaderboard />} />
+          <Route path="/yearly" element={<YearlyLeaderboard />} />
+          <Route path="/top-monthly" element={<TopMonthly />} />
+          <Route path="/top-yearly" element={<TopYearly />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

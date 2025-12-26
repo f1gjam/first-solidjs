@@ -6,8 +6,10 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { label: "Home", href: "/", icon: Home },
-  { label: "Monthly", href: "/monthly", icon: Trophy },
-  { label: "All Time", href: "/all-time", icon: Trophy },
+  { label: "Monthly", href: "/monthly", icon: Calendar },
+  { label: "Yearly", href: "/yearly", icon: Trophy },
+  { label: "Top Monthly", href: "/top-monthly", icon: Trophy },
+  { label: "Top Yearly", href: "/top-yearly", icon: Trophy },
 ];
 
 export function Header() {
