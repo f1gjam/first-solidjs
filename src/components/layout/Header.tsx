@@ -52,6 +52,15 @@ export function Header() {
           })}
         </nav>
 
+        {/* Unixcraft Logo - Top Right */}
+        <div className="hidden md:block">
+          <img 
+            src="/unixcraft-logo.png" 
+            alt="Unixcraft" 
+            className="h-10 w-auto opacity-80 hover:opacity-100 transition-opacity"
+          />
+        </div>
+
         {/* Mobile Menu Button */}
         <Button
           variant="ghost"

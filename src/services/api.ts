@@ -89,9 +89,9 @@ export const api = {
   },
 
   // Get monthly runner totals (running)
-  // monthSelected format: "December-2025" (optional, defaults to current month)
+  // Backend GetRunnerTotals uses default month if not provided
   getMonthlyRunnerTotals: async (monthSelected?: string): Promise<AthleteData[]> => {
-    const params = monthSelected ? { monthSelected } : { monthSelected: getCurrentMonth() };
+    const params = monthSelected ? { monthSelected } : {};
     const response = await apiClient.get<LeaderboardResponse>('/dataapi/runner_totals', { params });
     
     // Combine male and female athletes from the response

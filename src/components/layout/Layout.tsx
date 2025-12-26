@@ -16,13 +16,16 @@ export function Layout({ children }: LayoutProps) {
         <div className="container py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <img
-              src="https://developers.strava.com/images/api_logo_pwrdBy_strava_stack_gray.svg"
-              alt="Powered by Strava"
-              className="h-8 opacity-70"
+              src="/unixcraft-logo.png"
+              alt="Unixcraft"
+              className="h-8 w-auto opacity-70"
             />
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Unixcraft. All rights reserved.
+            </p>
           </div>
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Strava Club Stats. All rights reserved.
+            Powered by Strava API
           </p>
         </div>
       </footer>
