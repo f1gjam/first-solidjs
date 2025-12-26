@@ -10,6 +10,7 @@ const navItems = [
   { label: "Yearly", href: "/yearly", icon: Trophy },
   { label: "Top Monthly", href: "/top-monthly", icon: Trophy },
   { label: "Top Yearly", href: "/top-yearly", icon: Trophy },
+  { label: "Register", href: "/register", icon: Users },
 ];
 
 export function Header() {
@@ -53,7 +54,7 @@ export function Header() {
         </nav>
 
         {/* Unixcraft Logo - Top Right */}
-        <div className="hidden md:block">
+        <div className="hidden sm:block">
           <img 
             src="/unixcraft-logo.png" 
             alt="Unixcraft" 
@@ -65,7 +66,7 @@ export function Header() {
         <Button
           variant="ghost"
           size="icon"
-          className="md:hidden"
+          className="sm:hidden"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

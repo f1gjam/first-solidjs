@@ -12,25 +12,32 @@ const stats = [
 
 const leaderboards = [
   {
-    title: "Weekly Leaderboard",
-    description: "Top performers this week",
-    href: "/weekly",
-    icon: Calendar,
-    color: "from-blue-500 to-cyan-500",
-  },
-  {
     title: "Monthly Leaderboard",
-    description: "Best of the month",
+    description: "Current month's top performers",
     href: "/monthly",
-    icon: Trophy,
-    color: "from-primary to-orange-400",
+    icon: Calendar,
+    gradient: "from-primary to-orange-400",
   },
   {
-    title: "All Time Leaders",
-    description: "Legends of the club",
-    href: "/all-time",
+    title: "Yearly Leaderboard",
+    description: "Top performers this year",
+    href: "/yearly",
     icon: Trophy,
-    color: "from-purple-500 to-pink-500",
+    gradient: "from-purple-500 to-pink-500",
+  },
+  {
+    title: "Top Monthly",
+    description: "Category leaders this month",
+    href: "/top-monthly",
+    icon: Trophy,
+    gradient: "from-yellow-500 to-orange-500",
+  },
+  {
+    title: "Top Yearly",
+    description: "Category leaders this year",
+    href: "/top-yearly",
+    icon: Trophy,
+    gradient: "from-green-500 to-emerald-500",
   },
 ];
 
@@ -63,12 +70,12 @@ export default function Index() {
             </p>
             
             <div className="flex flex-wrap gap-4 justify-center animate-fade-in" style={{ animationDelay: "300ms" }}>
-              <Link to="/weekly">
+              <Link to="/monthly">
                 <Button variant="hero" size="xl">
                   View Leaderboards
                 </Button>
               </Link>
-              <Link to="/clubs">
+              <Link to="/coming-soon">
                 <Button variant="outline" size="xl" className="border-white/30 text-white hover:bg-white/10 hover:text-white">
                   Explore Clubs
                 </Button>
@@ -111,7 +118,7 @@ export default function Index() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {leaderboards.map((board, index) => (
               <Link
                 key={board.href}
