@@ -44,10 +44,14 @@ export interface Athlete {
   gender: "male" | "female";
   sport: "running" | "cycling";
   distance: number;
+  outdoorDistance: number;
+  indoorDistance: number;
+  percentIndoor: number;
   elevation: number;
+  outdoorElevation: number;
+  indoorElevation: number;
   time: string;
   activities: number;
-  avgSpeed: number;
   longestRide: number;
 }
 
@@ -61,8 +65,12 @@ export function LeaderboardTable({ data, title }: LeaderboardTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
-    elevation: !isMobile,
-    avgSpeed: !isMobile,
+    outdoorDistance: !isMobile,
+    indoorDistance: !isMobile,
+    percentIndoor: !isMobile,
+    outdoorElevation: !isMobile,
+    indoorElevation: !isMobile,
+    time: !isMobile,
     longestRide: !isMobile,
   });
   const [globalFilter, setGlobalFilter] = useState("");
@@ -129,14 +137,62 @@ export function LeaderboardTable({ data, title }: LeaderboardTableProps) {
             className="px-0 hover:bg-transparent"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Distance
+            Total Distance (mi)
             <SortIcon sorted={column.getIsSorted()} />
           </Button>
         ),
         cell: ({ row }) => (
           <span className="text-primary font-semibold">
-            {(row.getValue("distance") as number).toLocaleString()} km
+            {(row.getValue("distance") as number).toLocaleString()}
           </span>
+        ),
+      },
+      {
+        accessorKey: "outdoorDistance",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            className="px-0 hover:bg-transparent"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Outdoor Distance (mi)
+            <SortIcon sorted={column.getIsSorted()} />
+          </Button>
+        ),
+        cell: ({ row }) => (
+          <span>{(row.getValue("outdoorDistance") as number).toLocaleString()}</span>
+        ),
+      },
+      {
+        accessorKey: "indoorDistance",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            className="px-0 hover:bg-transparent"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Indoor Distance (mi)
+            <SortIcon sorted={column.getIsSorted()} />
+          </Button>
+        ),
+        cell: ({ row }) => (
+          <span>{(row.getValue("indoorDistance") as number).toLocaleString()}</span>
+        ),
+      },
+      {
+        accessorKey: "percentIndoor",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            className="px-0 hover:bg-transparent"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            % Indoor
+            <SortIcon sorted={column.getIsSorted()} />
+          </Button>
+        ),
+        cell: ({ row }) => (
+          <span>{(row.getValue("percentIndoor") as number).toFixed(1)}%</span>
         ),
       },
       {
@@ -147,12 +203,44 @@ export function LeaderboardTable({ data, title }: LeaderboardTableProps) {
             className="px-0 hover:bg-transparent"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Elevation
+            Total Elevation (m)
             <SortIcon sorted={column.getIsSorted()} />
           </Button>
         ),
         cell: ({ row }) => (
-          <span>{(row.getValue("elevation") as number).toLocaleString()} m</span>
+          <span>{(row.getValue("elevation") as number).toLocaleString()}</span>
+        ),
+      },
+      {
+        accessorKey: "outdoorElevation",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            className="px-0 hover:bg-transparent"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Outdoor Elevation (m)
+            <SortIcon sorted={column.getIsSorted()} />
+          </Button>
+        ),
+        cell: ({ row }) => (
+          <span>{(row.getValue("outdoorElevation") as number).toLocaleString()}</span>
+        ),
+      },
+      {
+        accessorKey: "indoorElevation",
+        header: ({ column }) => (
+          <Button
+            variant="ghost"
+            className="px-0 hover:bg-transparent"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Indoor Elevation (m)
+            <SortIcon sorted={column.getIsSorted()} />
+          </Button>
+        ),
+        cell: ({ row }) => (
+          <span>{(row.getValue("indoorElevation") as number).toLocaleString()}</span>
         ),
       },
       {

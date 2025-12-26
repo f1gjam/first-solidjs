@@ -135,6 +135,8 @@ export const convertAthleteDataToTableFormat = (athletes: AthleteData[], sport: 
     
     // Backend returns distances in km, convert to miles (1 km = 0.621371 miles)
     const totalDistanceMiles = athlete.TotalDistance * 0.621371;
+    const outdoorDistanceMiles = athlete.TotalOutdoorDistance * 0.621371;
+    const indoorDistanceMiles = athlete.TotalIndoorDistance * 0.621371;
     const longestRideMiles = Math.max(athlete.LongestOutdoorRide, athlete.LongestIndoorRide) * 0.621371;
     
     return {
@@ -143,7 +145,12 @@ export const convertAthleteDataToTableFormat = (athletes: AthleteData[], sport: 
       gender: athlete.AthleteSex === 'M' ? 'male' as const : 'female' as const,
       sport,
       distance: Math.round(totalDistanceMiles),
+      outdoorDistance: Math.round(outdoorDistanceMiles),
+      indoorDistance: Math.round(indoorDistanceMiles),
+      percentIndoor: athlete.PercentIndoor,
       elevation: Math.round(athlete.TotalElevation),
+      outdoorElevation: Math.round(athlete.TotalOutdoorElevation),
+      indoorElevation: Math.round(athlete.TotalIndoorElevation),
       time: `${hours}h ${minutes}m`,
       activities: (athlete.OutdoorDistances?.length || 0) + (athlete.IndoorDistances?.length || 0),
       longestRide: Math.round(longestRideMiles),
