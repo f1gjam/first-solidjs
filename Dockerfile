@@ -19,7 +19,7 @@ COPY package.json package-lock.json ./
 RUN npm ci --silent
 
 # Copy configuration files
-COPY config-overrides.js .babelrc tsconfig.json postcss.config.js tailwind.config.js ./
+COPY config-overrides.js .babelrc tsconfig.json postcss.config.js tailwind.config.ts ./
 
 # Copy nginx configuration
 COPY nginx ./nginx
