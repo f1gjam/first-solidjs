@@ -100,6 +100,17 @@ export const api = {
     return [...maleAthletes, ...femaleAthletes];
   },
 
+  // Get yearly runner totals (running)
+  getYearlyRunnerTotals: async (monthSelected?: string): Promise<AthleteData[]> => {
+    const params = monthSelected ? { monthSelected } : { monthSelected: getCurrentYear() };
+    const response = await apiClient.get<LeaderboardResponse>('/dataapi/runner_yearly_totals', { params });
+    
+    // Combine male and female athletes from the response
+    const maleAthletes = response.data.MaleSorted || [];
+    const femaleAthletes = response.data.FemaleSorted || [];
+    return [...maleAthletes, ...femaleAthletes];
+  },
+
   // Weekly leaderboard - use current month data
   getWeeklyLeaderboard: async (): Promise<AthleteData[]> => {
     return api.getMonthlyRiderTotals();

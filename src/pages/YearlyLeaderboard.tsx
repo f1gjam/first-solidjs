@@ -11,11 +11,16 @@ export default function YearlyLeaderboard() {
   const [gender, setGender] = useState<Gender>("male");
   const [sport, setSport] = useState<Sport>("cycling");
 
-  // Note: Running data for all-time not available from backend yet
-  // Backend only has rider_yearly_totals (cycling), no runner_yearly_totals
+  // Fetch yearly data based on sport selection
   const { data, isLoading, error } = useQuery({
-    queryKey: ["yearlyLeaderboard"],
-    queryFn: api.getYearlyLeaderboard,
+    queryKey: ["yearlyLeaderboard", sport],
+    queryFn: async () => {
+      if (sport === "cycling") {
+        return api.getYearlyRiderTotals();
+      } else {
+        return api.getYearlyRunnerTotals();
+      }
+    },
   });
 
   const filteredAthletes = useMemo(() => {
