@@ -21,6 +21,9 @@ RUN npm ci --silent
 # Copy configuration files
 COPY config-overrides.js .babelrc tsconfig.json postcss.config.cjs tailwind.config.ts vite.config.ts components.json ./
 
+# Copy index.html (required by Vite)
+COPY index.html ./
+
 # Copy nginx configuration
 COPY nginx ./nginx
 
