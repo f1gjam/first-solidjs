@@ -92,12 +92,12 @@ export default function Register() {
             <Button
               onClick={handleStravaConnect}
               size="xl"
-              className="bg-[#FC4C02] hover:bg-[#E34402] text-white font-bold text-lg px-8 py-6 h-auto"
+              className="bg-[#FC4C02] hover:bg-[#E34402] text-white font-bold text-lg px-8 py-6 h-auto rounded-lg"
             >
               <img 
-                src="https://developers.strava.com/images/btn_strava_connectwith_orange.png" 
+                src="/btn_strava_connectwith_orange.png" 
                 alt="Connect with Strava"
-                className="h-12"
+                className="h-12 w-auto"
               />
             </Button>
             <p className="text-sm text-muted-foreground text-center max-w-md">

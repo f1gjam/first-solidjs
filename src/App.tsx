@@ -8,6 +8,7 @@ import MonthlyLeaderboard from "./pages/MonthlyLeaderboard";
 import YearlyLeaderboard from "./pages/YearlyLeaderboard";
 import TopMonthly from "./pages/TopMonthly";
 import TopYearly from "./pages/TopYearly";
+import Help from "./pages/Help";
 import Register from "./pages/Register";
 import Documentation from "./pages/Documentation";
 import ComingSoon from "./pages/ComingSoon";
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/top-monthly" element={<TopMonthly />} />
           <Route path="/top-yearly" element={<TopYearly />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/help" element={<Help />} />
           <Route path="/documentation" element={<Documentation />} />
           <Route path="/clubs" element={<ComingSoon />} />
           <Route path="/coming-soon" element={<ComingSoon />} />

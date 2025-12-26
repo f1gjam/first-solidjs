@@ -11,6 +11,7 @@ const navItems = [
   { label: "Top Monthly", href: "/top-monthly", icon: Trophy },
   { label: "Top Yearly", href: "/top-yearly", icon: Trophy },
   { label: "Register", href: "/register", icon: Users },
+  { label: "Help", href: "/help", icon: Activity },
 ];
 
 export function Header() {

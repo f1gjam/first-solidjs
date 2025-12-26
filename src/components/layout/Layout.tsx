@@ -24,9 +24,13 @@ export function Layout({ children }: LayoutProps) {
               © {new Date().getFullYear()} Unixcraft. All rights reserved.
             </p>
           </div>
-          <p className="text-sm text-muted-foreground">
-            Powered by Strava API
-          </p>
+          <div className="flex items-center gap-2">
+            <img
+              src="/api_logo_pwrdBy_strava_stack_gray.png"
+              alt="Powered by Strava"
+              className="h-10 w-auto opacity-70"
+            />
+          </div>
         </div>
       </footer>
     </div>
