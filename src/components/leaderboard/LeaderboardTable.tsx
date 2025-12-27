@@ -273,22 +273,6 @@ export function LeaderboardTable({ data, title }: LeaderboardTableProps) {
         cell: ({ row }) => <span>{row.getValue("activities")}</span>,
       },
       {
-        accessorKey: "avgSpeed",
-        header: ({ column }) => (
-          <Button
-            variant="ghost"
-            className="px-0 hover:bg-transparent"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Avg Speed
-            <SortIcon sorted={column.getIsSorted()} />
-          </Button>
-        ),
-        cell: ({ row }) => (
-          <span>{(row.getValue("avgSpeed") as number).toFixed(1)} km/h</span>
-        ),
-      },
-      {
         accessorKey: "longestRide",
         header: ({ column }) => (
           <Button
