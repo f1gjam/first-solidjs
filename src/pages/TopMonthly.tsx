@@ -64,17 +64,26 @@ export default function TopMonthly() {
 
     if (filtered.length === 0) return null;
 
+    // Safe reduce with proper null/undefined handling
+    const safeReduce = (field: keyof AthleteData) => {
+      return filtered.reduce((max, a) => {
+        const maxVal = (max[field] as number) || 0;
+        const aVal = (a[field] as number) || 0;
+        return aVal > maxVal ? a : max;
+      });
+    };
+
     return {
-      totalDistance: filtered.reduce((max, a) => a.TotalDistance > max.TotalDistance ? a : max),
-      totalOutdoorDistance: filtered.reduce((max, a) => a.TotalOutdoorDistance > max.TotalOutdoorDistance ? a : max),
-      totalIndoorDistance: filtered.reduce((max, a) => a.TotalIndoorDistance > max.TotalIndoorDistance ? a : max),
-      totalElevation: filtered.reduce((max, a) => a.TotalElevation > max.TotalElevation ? a : max),
-      totalOutdoorElevation: filtered.reduce((max, a) => a.TotalOutdoorElevation > max.TotalOutdoorElevation ? a : max),
-      totalIndoorElevation: filtered.reduce((max, a) => a.TotalIndoorElevation > max.TotalIndoorElevation ? a : max),
-      longestOutdoorRide: filtered.reduce((max, a) => a.LongestOutdoorRide > max.LongestOutdoorRide ? a : max),
-      longestIndoorRide: filtered.reduce((max, a) => a.LongestIndoorRide > max.LongestIndoorRide ? a : max),
-      highestOutdoorElevation: filtered.reduce((max, a) => a.HighestOutdoorElevation > max.HighestOutdoorElevation ? a : max),
-      highestIndoorElevation: filtered.reduce((max, a) => a.HighestIndoorElevation > max.HighestIndoorElevation ? a : max),
+      totalDistance: safeReduce('TotalDistance'),
+      totalOutdoorDistance: safeReduce('TotalOutdoorDistance'),
+      totalIndoorDistance: safeReduce('TotalIndoorDistance'),
+      totalElevation: safeReduce('TotalElevation'),
+      totalOutdoorElevation: safeReduce('TotalOutdoorElevation'),
+      totalIndoorElevation: safeReduce('TotalIndoorElevation'),
+      longestOutdoorRide: safeReduce('LongestOutdoorRide'),
+      longestIndoorRide: safeReduce('LongestIndoorRide'),
+      highestOutdoorElevation: safeReduce('HighestOutdoorElevation'),
+      highestIndoorElevation: safeReduce('HighestIndoorElevation'),
     };
   }, [data, gender]);
 
@@ -139,16 +148,16 @@ export default function TopMonthly() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <StatCard title="Total Distance" athlete={topAthletes.totalDistance} value={topAthletes.totalDistance.TotalDistance} unit="mi" />
-            <StatCard title="Total Outdoor Distance" athlete={topAthletes.totalOutdoorDistance} value={topAthletes.totalOutdoorDistance.TotalOutdoorDistance} unit="mi" />
-            <StatCard title="Total Indoor Distance" athlete={topAthletes.totalIndoorDistance} value={topAthletes.totalIndoorDistance.TotalIndoorDistance} unit="mi" />
-            <StatCard title="Total Elevation" athlete={topAthletes.totalElevation} value={topAthletes.totalElevation.TotalElevation} unit="m" />
-            <StatCard title="Total Outdoor Elevation" athlete={topAthletes.totalOutdoorElevation} value={topAthletes.totalOutdoorElevation.TotalOutdoorElevation} unit="m" />
-            <StatCard title="Total Indoor Elevation" athlete={topAthletes.totalIndoorElevation} value={topAthletes.totalIndoorElevation.TotalIndoorElevation} unit="m" />
-            <StatCard title="Longest Outdoor Ride" athlete={topAthletes.longestOutdoorRide} value={topAthletes.longestOutdoorRide.LongestOutdoorRide} unit="mi" />
-            <StatCard title="Longest Indoor Ride" athlete={topAthletes.longestIndoorRide} value={topAthletes.longestIndoorRide.LongestIndoorRide} unit="mi" />
-            <StatCard title="Highest Outdoor Elevation" athlete={topAthletes.highestOutdoorElevation} value={topAthletes.highestOutdoorElevation.HighestOutdoorElevation} unit="m" />
-            <StatCard title="Highest Indoor Elevation" athlete={topAthletes.highestIndoorElevation} value={topAthletes.highestIndoorElevation.HighestIndoorElevation} unit="m" />
+            <StatCard title="Total Distance" athlete={topAthletes.totalDistance} value={topAthletes.totalDistance.TotalDistance || 0} unit="mi" />
+            <StatCard title="Total Outdoor Distance" athlete={topAthletes.totalOutdoorDistance} value={topAthletes.totalOutdoorDistance.TotalOutdoorDistance || 0} unit="mi" />
+            <StatCard title="Total Indoor Distance" athlete={topAthletes.totalIndoorDistance} value={topAthletes.totalIndoorDistance.TotalIndoorDistance || 0} unit="mi" />
+            <StatCard title="Total Elevation" athlete={topAthletes.totalElevation} value={topAthletes.totalElevation.TotalElevation || 0} unit="m" />
+            <StatCard title="Total Outdoor Elevation" athlete={topAthletes.totalOutdoorElevation} value={topAthletes.totalOutdoorElevation.TotalOutdoorElevation || 0} unit="m" />
+            <StatCard title="Total Indoor Elevation" athlete={topAthletes.totalIndoorElevation} value={topAthletes.totalIndoorElevation.TotalIndoorElevation || 0} unit="m" />
+            <StatCard title={`Longest Outdoor ${sport === 'cycling' ? 'Ride' : 'Run'}`} athlete={topAthletes.longestOutdoorRide} value={topAthletes.longestOutdoorRide.LongestOutdoorRide || 0} unit="mi" />
+            <StatCard title={`Longest Indoor ${sport === 'cycling' ? 'Ride' : 'Run'}`} athlete={topAthletes.longestIndoorRide} value={topAthletes.longestIndoorRide.LongestIndoorRide || 0} unit="mi" />
+            <StatCard title="Highest Outdoor Elevation" athlete={topAthletes.highestOutdoorElevation} value={topAthletes.highestOutdoorElevation.HighestOutdoorElevation || 0} unit="m" />
+            <StatCard title="Highest Indoor Elevation" athlete={topAthletes.highestIndoorElevation} value={topAthletes.highestIndoorElevation.HighestIndoorElevation || 0} unit="m" />
           </div>
         )}
       </div>
