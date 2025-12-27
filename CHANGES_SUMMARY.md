@@ -14,24 +14,34 @@
 **Files Modified:**
 - `src/pages/TopMonthly.tsx`
 
-### 2. Help Page Enhancement
-**Problem:** The Help page needed comprehensive content from the markdown document with images.
+### 2. Help Page Enhancement with Local Images
+**Problem:** The Help page needed comprehensive content from the markdown document with images, but external image URLs were not loading properly.
 
 **Solution:**
-- Updated Help page with detailed content from `~/Dropbox/Temp/StravaAppInstructionsV2.md`
+- Extracted all images from Google Doc (https://docs.google.com/document/d/1LFZgx1RElJfLTlWnnn27AkmCkpgPvrBP5FjVIoUZCCA/edit)
+- Saved 9 high-quality images locally to `public/help-images/`:
+  - register-button.png (159KB)
+  - connect-button.png (91KB)
+  - permissions.png (2.0MB)
+  - authorize.png (46KB)
+  - success.png (21KB)
+  - settings.png (197KB)
+  - my-apps.png (120KB)
+  - find-app.png (56KB)
+  - revoke.png (56KB)
+- Updated Help page with detailed content from the markdown document
 - Added "About This App" section explaining the application's purpose
-- Enhanced registration instructions with:
-  - Step-by-step guide with visual screenshots
-  - Warning boxes for critical steps (permissions, waiting time)
-  - Embedded images from the Google Doc
+- Enhanced registration instructions with step-by-step guide and visual screenshots
 - Added deregistration instructions with screenshots
 - Added "Understanding the Statistics" section
 - Enhanced troubleshooting section with comprehensive solutions
 - Improved visual hierarchy with colored sections and icons
 - Made text clearer and more user-friendly
+- All images now load from local storage for faster, reliable access
 
 **Files Modified:**
 - `src/pages/Help.tsx`
+- `public/help-images/` (new directory with 9 images)
 
 ## Technical Details
 

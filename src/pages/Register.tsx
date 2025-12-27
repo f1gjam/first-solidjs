@@ -89,17 +89,16 @@ export default function Register() {
 
           {/* Connect Button */}
           <div className="flex flex-col items-center gap-4 py-8">
-            <Button
+            <button
               onClick={handleStravaConnect}
-              size="xl"
-              className="bg-[#FC4C02] hover:bg-[#E34402] text-white font-bold text-lg px-8 py-6 h-auto rounded-lg"
+              className="transition-transform hover:scale-105 active:scale-95"
             >
               <img 
                 src="/btn_strava_connectwith_orange.png" 
                 alt="Connect with Strava"
                 className="h-12 w-auto"
               />
-            </Button>
+            </button>
             <p className="text-sm text-muted-foreground text-center max-w-md">
               By connecting, you authorize this app to access your Strava activity data
             </p>

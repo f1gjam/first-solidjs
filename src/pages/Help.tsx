@@ -119,7 +119,7 @@ export default function Help() {
                   <span className="font-semibold text-foreground">Visit the Registration Page</span>
                   <p className="ml-6 mt-1 text-sm">Navigate to the Register page by clicking the "Register" button in the menu</p>
                   <div className="ml-6 mt-2 p-3 rounded bg-muted/50 text-sm">
-                    <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXdl7wuTWCHnVKDCOdHJ9BYxUQ9gfaQQhCl58MKw1j3OQUejPEWrqM_Sq-q3-zc5TE4RYRvzv5hJG72kkl7J0u0hsBEMnQBv5RNTgzKLQxRHbYxbL3TaIbqNxkZW1RbRb_SgD-VcGnfzZ-qQ5DpPdpxXuqc?key=LOD4zOaIHTmCMD5N9zAcAA" alt="Register Button" className="rounded border border-border max-w-md" />
+                    <img src="/help-images/register-button.png" alt="Register Button" className="rounded border border-border max-w-md" />
                   </div>
                 </li>
                 <li className="text-muted-foreground">
@@ -130,7 +130,7 @@ export default function Help() {
                   <span className="font-semibold text-foreground">Click "Connect with Strava"</span>
                   <p className="ml-6 mt-1 text-sm">Click the orange "Connect with Strava" button on the registration page</p>
                   <div className="ml-6 mt-2 p-3 rounded bg-muted/50 text-sm">
-                    <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXe3hXs9C6nxQZ9tEF5nJaIq1TKYFr6sJoqDi41h0lWQxDo5NqBM2bB8w-sWtzOGOsH-LlDyLOumZPZqKl4hhLqTVQbdK1zXWPOiFhilN0Q8qB5p1CKlIXLpv8R-R0W3j-yp2uvhKQ?key=LOD4zOaIHTmCMD5N9zAcAA" alt="Connect Button" className="rounded border border-border max-w-md" />
+                    <img src="/help-images/connect-button.png" alt="Connect Button" className="rounded border border-border max-w-md" />
                   </div>
                 </li>
                 <li className="text-muted-foreground">
@@ -140,14 +140,14 @@ export default function Help() {
                     The app needs full access to read your activities. Without all permissions, registration will fail!
                   </p>
                   <div className="ml-6 mt-2 p-3 rounded bg-muted/50 text-sm">
-                    <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXf1QL3sBz4GHZsvhCNCFKVjjHSb85b-u5hxHK9JV0j6cQnVE6yFGMbnB2i8vTi7Js0lW7QdgE-hqTOXzWUZs_EIE-3DH26r8fCUV4iJcmcjQIm2SbG7LItV2D5Pc9NHsMY5p00vfg?key=LOD4zOaIHTmCMD5N9zAcAA" alt="Permissions" className="rounded border border-border max-w-md" />
+                    <img src="/help-images/permissions.png" alt="Permissions" className="rounded border border-border max-w-md" />
                   </div>
                 </li>
                 <li className="text-muted-foreground">
                   <span className="font-semibold text-foreground">Click "Authorize"</span>
                   <p className="ml-6 mt-1 text-sm">After checking all permissions, click the orange "Authorize" button</p>
                   <div className="ml-6 mt-2 p-3 rounded bg-muted/50 text-sm">
-                    <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXfNbB7gQ8E8wAqF1g2Z3T6VhbJe9lK6_TxqceLKnDqPQYx-F0v_yKbRcnSIVVUBGhbN71RHZR3hZ_8pCpGU9uVfvmAf70Cqj8A6TaySC6T1GF0_xNzXzZ9YD0gI0PihpBgqyHaB?key=LOD4zOaIHTmCMD5N9zAcAA" alt="Authorize" className="rounded border border-border max-w-md" />
+                    <img src="/help-images/authorize.png" alt="Authorize" className="rounded border border-border max-w-md" />
                   </div>
                 </li>
                 <li className="text-muted-foreground">
@@ -163,7 +163,7 @@ export default function Help() {
                     You'll see a success page if registration worked. If there's an error, read the message carefully for troubleshooting steps.
                   </p>
                   <div className="ml-6 mt-2 p-3 rounded bg-muted/50 text-sm">
-                    <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXeLQOzCYGGNn0UmnMYKpFUZJPqtqvHqBVJ30Wa21-CHDPfqYqfXqJqg0WTLJqv_DQaOQrx6FVA_7X9rqH9hWD-NJvHszmDLsCaCkKHJ4rh7F3wD1aPHxvMIz7Nv_f5xUvh84bqezA?key=LOD4zOaIHTmCMD5N9zAcAA" alt="Success" className="rounded border border-border max-w-md" />
+                    <img src="/help-images/success.png" alt="Success" className="rounded border border-border max-w-md" />
                   </div>
                 </li>
               </ol>
@@ -184,28 +184,28 @@ export default function Help() {
                   <span className="font-semibold text-foreground">Go to Strava Settings</span>
                   <p className="ml-6 mt-1 text-sm">Log in to Strava.com and click on your profile picture in the top right</p>
                   <div className="ml-6 mt-2 p-3 rounded bg-muted/50 text-sm">
-                    <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXdTgp7LcFe7-RGDqGXBKOq2HQlRMhsUcfKqbQ6FO6tYi-zfFXx8Gs3rSMXt3tEDOHbvM1VWvFBFbST6QqT5rLs9MRBqqLFOXuL0FhD8Cy3sPbvqNvwNfIhyUWP8PHvpFhOYgJJc8A?key=LOD4zOaIHTmCMD5N9zAcAA" alt="Settings" className="rounded border border-border max-w-md" />
+                    <img src="/help-images/settings.png" alt="Settings" className="rounded border border-border max-w-md" />
                   </div>
                 </li>
                 <li className="text-muted-foreground">
                   <span className="font-semibold text-foreground">Navigate to "My Apps"</span>
                   <p className="ml-6 mt-1 text-sm">In the dropdown menu, select "Settings", then click on the "My Apps" tab</p>
                   <div className="ml-6 mt-2 p-3 rounded bg-muted/50 text-sm">
-                    <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXeLyEjkRc3QkOzM4G20w6hg2F_xYtBk7mBGMh3qVkNP1fq3jRLDaQsqg_YeFrEkFD3BVZ5y0jtgpzKlSMSIHlJr0IzNWfMpBpVdR-FE11oDYlpkSs1vM-zCUKLEXfvl1oE0VQojzw?key=LOD4zOaIHTmCMD5N9zAcAA" alt="My Apps" className="rounded border border-border max-w-md" />
+                    <img src="/help-images/my-apps.png" alt="My Apps" className="rounded border border-border max-w-md" />
                   </div>
                 </li>
                 <li className="text-muted-foreground">
                   <span className="font-semibold text-foreground">Find "Strava Club Stats"</span>
                   <p className="ml-6 mt-1 text-sm">Scroll down to find "Strava Club Stats" in your list of authorized applications</p>
                   <div className="ml-6 mt-2 p-3 rounded bg-muted/50 text-sm">
-                    <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXckh15_u29p1Tz_xg8Zzq4dT95O2wRW0oVdmPslj_Kx1L67hCL2A3uXbIqhAjhk4YH2zOIzUw7D9A_cWPLGKnL6GK4zBQqZBF_S6Zi2qAY1jI8-i4SJpiqL0Mk8MRfMIKW6-Kw6-g?key=LOD4zOaIHTmCMD5N9zAcAA" alt="Find App" className="rounded border border-border max-w-md" />
+                    <img src="/help-images/find-app.png" alt="Find App" className="rounded border border-border max-w-md" />
                   </div>
                 </li>
                 <li className="text-muted-foreground">
                   <span className="font-semibold text-foreground">Click "Revoke Access"</span>
                   <p className="ml-6 mt-1 text-sm">Click the red "Revoke Access" button next to "Strava Club Stats"</p>
                   <div className="ml-6 mt-2 p-3 rounded bg-muted/50 text-sm">
-                    <img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXfLSIOlVxmqqkH_xrCqAoK3LQwj1zKNZCLH0n7LrqqYx5C5Vjs5XSO4FZVYxO-M7n5bI6mD3xo_YfZvZYnO8SXnlf6F8Gvg8s_MaQo7jSHJhiS6ZiWdqNXs6Kfj-HW8n5VkZkZ0SA?key=LOD4zOaIHTmCMD5N9zAcAA" alt="Revoke" className="rounded border border-border max-w-md" />
+                    <img src="/help-images/revoke.png" alt="Revoke" className="rounded border border-border max-w-md" />
                   </div>
                 </li>
                 <li className="text-muted-foreground">
