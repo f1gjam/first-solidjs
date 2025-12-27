@@ -83,7 +83,7 @@ export default function TopMonthly() {
       <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-2">{title}</h3>
       <p className="text-2xl font-bold text-foreground mb-1">{athlete.AthleteName}</p>
       <p className="text-3xl font-display font-bold text-primary">
-        {unit === 'mi' ? (value * 0.621371).toFixed(1) : value.toFixed(1)} {unit}
+        {value.toFixed(1)} {unit}
       </p>
     </div>
   );
